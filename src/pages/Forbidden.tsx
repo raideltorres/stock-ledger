@@ -32,7 +32,7 @@ export default function Forbidden() {
           <p className="text-muted-foreground">
             No tienes permisos para acceder a esta página.
           </p>
-          <Button onClick={() => handleBackToHome()}>Volver al inicio</Button>
+          <Button onClick={handleBackToHome}>Volver al inicio</Button>
         </CardContent>
       </Card>
     </div>

@@ -31,6 +31,11 @@ export function NavUser({ user }: NavUserProps) {
           navigate("/profile");
           break;
 
+        case "GO_TO_NOTIFICATIONS":
+          // Navigate to profile page
+          navigate("/profile");
+          break;
+
         default:
           // Handle logout
           logout();
@@ -77,7 +82,7 @@ export function NavUser({ user }: NavUserProps) {
             <UserCircle />
             Account
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handleAction("GO_TO_PROFILE")}>
+          <DropdownMenuItem onClick={() => handleAction("GO_TO_NOTIFICATIONS")}>
             <Bell />
             Notifications
           </DropdownMenuItem>

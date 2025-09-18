@@ -32,7 +32,7 @@ export default function NotFound() {
           <p className="text-muted-foreground">
             La página que buscas no existe o ha sido movida.
           </p>
-          <Button onClick={() => handleBackToHome()}>Ir al inicio</Button>
+          <Button onClick={handleBackToHome}>Ir al inicio</Button>
         </CardContent>
       </Card>
     </div>

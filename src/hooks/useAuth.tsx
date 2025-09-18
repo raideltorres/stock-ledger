@@ -34,14 +34,19 @@ export function useAuth() {
           user: response.data,
         })
       );
-      saveStringToLocalStorage(ACCESS_TOKEN_KEY, response.access_token!);
 
-      if (response.data.role === "ADMIN") {
-        navigate("/admin/dashboard");
-        return;
+      if (response.access_token) {
+        saveStringToLocalStorage(ACCESS_TOKEN_KEY, response.access_token!);
+
+        if (response.data.role === "ADMIN") {
+          navigate("/admin/dashboard");
+          return;
+        }
+
+        navigate("/sales");
+      } else {
+        navigate("/auth/sign-in");
       }
-
-      navigate("/sales");
     },
     [dispatch, navigate]
   );

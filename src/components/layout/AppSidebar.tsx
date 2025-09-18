@@ -23,49 +23,49 @@ import {
 } from "lucide-react";
 import { useCallback } from "react";
 import { Button } from "../ui/button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 
 // Menu items.
 const menuItems: SideMenuItem[] = [
   {
     title: "Dashboard",
-    url: "dashboard",
+    url: "/admin/dashboard",
     icon: <LayoutDashboard />,
   },
   {
     title: "Usuarios",
-    url: "users",
+    url: "/admin/users",
     icon: <UserCog />,
   },
   {
     title: "Ordenes de venta",
-    url: "so",
+    url: "/admin/so",
     icon: <BanknoteArrowUp />,
   },
   {
     title: "Ordenes de compra",
-    url: "po",
+    url: "/admin/po",
     icon: <BanknoteArrowDown />,
   },
   {
     title: "Entidades",
-    url: "entities",
+    url: "/admin/entities",
     icon: <Store />,
   },
   {
     title: "Localidades",
-    url: "locations",
+    url: "/admin/locations",
     icon: <Box />,
   },
   {
     title: "Clientes",
-    url: "clients",
+    url: "/admin/clients",
     icon: <CircleUser />,
   },
   {
     title: "Proveedores",
-    url: "suppliers",
+    url: "/admin/suppliers",
     icon: <SquareUser />,
   },
 ];
@@ -111,10 +111,10 @@ export function AppSidebar() {
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <Link to={item.url ?? "#"}>
                       {item.icon}
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -129,10 +129,10 @@ export function AppSidebar() {
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton asChild>
                 {item.url ? (
-                  <a href={item.url}>
+                  <Link to={item.url ?? "#"}>
                     {item.icon}
                     <span>{item.title}</span>
-                  </a>
+                  </Link>
                 ) : (
                   <Button onClick={() => handleAction(item.action!)}>
                     {item.icon}

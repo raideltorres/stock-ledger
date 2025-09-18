@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import { AuthLayout } from "@/components/layout/AuthLayout";
 import { VerticalLayout } from "@/components/layout/VerticalLayout";
@@ -28,6 +28,9 @@ import NotFound from "@/pages/NotFound";
 export default function MainRoutes() {
   return (
     <Routes>
+      {/* Redirect from "/" to "/admin/dashboard" */}
+      <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
+
       {/* Auth section */}
       <Route path="auth" element={<AuthLayout />}>
         <Route path="sign-in" element={<SignIn />} />

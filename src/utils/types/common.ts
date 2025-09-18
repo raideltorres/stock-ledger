@@ -1,5 +1,9 @@
 export type Role = "ADMIN" | "USER";
-export type Action = "GO_TO_SALES" | "GO_TO_PROFILE" | "LOG_OUT";
+export type Action =
+  | "GO_TO_SALES"
+  | "GO_TO_PROFILE"
+  | "GO_TO_NOTIFICATIONS"
+  | "LOG_OUT";
 
 export interface ErrorDetails {
   error: string;
