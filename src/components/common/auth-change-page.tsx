@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 type AuthChangePageProps = {
   text: string;
@@ -23,15 +24,15 @@ const AuthChangePage = ({
       )}
     >
       {text}
-      <a
-        href={linkTextHref ?? "#"}
+      <Link
+        to={linkTextHref ?? "#"}
         className={cn(
           "text-[14px] text-blue-500 hover:underline",
           linkTextClassName
         )}
       >
         {linkTextText}
-      </a>
+      </Link>
     </span>
   );
 };
