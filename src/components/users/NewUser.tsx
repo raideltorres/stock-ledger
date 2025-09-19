@@ -1,8 +1,9 @@
+import type { ErrorResponse } from "@/utils/types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-
-import { Button } from "@/components/ui/button";
+import { useCallback } from "react";
+import { useToast } from "@/hooks/useToast";
 import {
   Form,
   FormControl,
@@ -12,16 +13,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useSignInMutation } from "@/store/api/auth";
-import { useCallback } from "react";
-import { useAuth } from "@/hooks/useAuth";
-import { useToast } from "@/hooks/useToast";
+import { Button } from "@/components/ui/button";
+import { useCreateUserMutation } from "@/store/api/user";
 
-import type { AuthResponse, ErrorResponse } from "@/utils/types";
-import { AuthChangePage } from "@/components/common/AuthChangePage";
-
-const loginSchema = z.object({
+const newUserSchema = z.object({
+  name: z.string().nonempty("Campo requerido").min(2, "Nombre muy corto"),
   email: z.string().nonempty("Campo requerido").email("Correo no válido"),
   password: z
     .string()
@@ -29,27 +25,26 @@ const loginSchema = z.object({
     .min(6, "Mínimo 6 caracteres"),
 });
 
-type LoginValues = z.infer<typeof loginSchema>;
+type NewUserValues = z.infer<typeof newUserSchema>;
 
-export function SignIn() {
-  const { login } = useAuth();
+export default function NewUser() {
   const toast = useToast();
-  const form = useForm<LoginValues>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<NewUserValues>({
+    resolver: zodResolver(newUserSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
   });
 
-  const [signIn] = useSignInMutation();
+  const [createUser] = useCreateUserMutation();
 
-  const handleSignIn = useCallback(
-    async (data: LoginValues) => {
+  const handleNewUser = useCallback(
+    async (data: NewUserValues) => {
       try {
-        const signInResult = (await signIn(data).unwrap()) as AuthResponse;
-
-        login(signInResult);
+        await createUser(data).unwrap();
+        form.reset();
       } catch (error) {
         const errorData = error as ErrorResponse;
         toast.error(errorData.data.error, {
@@ -60,20 +55,33 @@ export function SignIn() {
         });
       }
     },
-    [login, signIn, toast]
+    [createUser, form, toast]
   );
 
   return (
-    <Card className="w-full max-w-md mx-auto">
-      <CardHeader>
-        <CardTitle className="text-center">Iniciar sesión</CardTitle>
-      </CardHeader>
-      <CardContent>
+    <div className="grid gap-4">
+      <div className="space-y-2">
+        <h4 className="leading-none font-medium">Crear usuario</h4>
+      </div>
+      <div className="grid gap-2">
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(handleSignIn)}
+            onSubmit={form.handleSubmit(handleNewUser)}
             className="space-y-6"
           >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nombre</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Nombre completo" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="email"
@@ -81,7 +89,7 @@ export function SignIn() {
                 <FormItem>
                   <FormLabel>Correo electrónico</FormLabel>
                   <FormControl>
-                    <Input placeholder="tucorreo@ejemplo.com" {...field} />
+                    <Input placeholder="correo@ejemplo.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -104,17 +112,11 @@ export function SignIn() {
               type="submit"
               className="w-full"
             >
-              Entrar
+              Crear
             </Button>
-
-            <AuthChangePage
-              text={"¿No tienes una cuenta?"}
-              linkTextText={"Solicita una cuenta"}
-              linkTextHref={`/auth/sign-up`}
-            />
           </form>
         </Form>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

@@ -1,7 +1,6 @@
-import React from "react";
 import { cn } from "@/lib/utils";
 
-type LegalProps = {
+export type LegalProps = {
   legalText: string;
   legalTextClassName?: string;
   termsAndConditionsText?: string;
@@ -12,7 +11,7 @@ type LegalProps = {
   privacyPolicyClassName?: string;
 };
 
-const Legal = ({
+export function Legal({
   legalText,
   legalTextClassName,
   termsAndConditionsText,
@@ -21,7 +20,7 @@ const Legal = ({
   privacyPolicyText,
   privacyPolicyHref,
   privacyPolicyClassName,
-}: LegalProps) => {
+}: LegalProps) {
   return (
     <span
       className={cn(
@@ -50,7 +49,4 @@ const Legal = ({
       </a>
     </span>
   );
-};
-
-export type { LegalProps };
-export { Legal };
+}

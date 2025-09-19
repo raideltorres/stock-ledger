@@ -13,7 +13,7 @@ import storage from "redux-persist/lib/storage";
 
 import { authApi } from "./api/auth";
 import { userApi } from "./api/user";
-import { userReducer } from "./slices";
+import { userReducer, usersFilterReducer } from "./slices";
 
 const persistedUserReducer = persistReducer(
   {
@@ -29,6 +29,8 @@ const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
+
+    usersFilter: usersFilterReducer,
 
     user: persistedUserReducer,
   },

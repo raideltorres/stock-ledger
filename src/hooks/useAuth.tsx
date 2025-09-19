@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN_KEY } from "@/constants/local-storage";
+import { ACCESS_TOKEN_KEY } from "@/constants";
 import { selectUserSlice, setUserSlice } from "@/store/slices";
 import {
   removeFromLocalStorage,

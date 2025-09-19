@@ -1,5 +1,6 @@
 import { Legal } from "../common/legal";
 
+
 export function Footer() {
   return (
     <div className="w-full flex flex-col p-3 bg-gray-200">
