@@ -1,9 +1,10 @@
+import { ROWS_PER_PAGE } from "@/constants";
 import type { UsersFilterState } from "@/utils/types";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: UsersFilterState = {
   page: 1,
-  limit: 15,
+  limit: ROWS_PER_PAGE,
   criteria: "",
   status: "ALL",
   role: "ALL",

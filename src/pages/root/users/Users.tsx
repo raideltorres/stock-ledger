@@ -9,6 +9,7 @@ import {
 import NewUser from "@/components/users/NewUser";
 import { UserListItem } from "@/components/users/UserListItem";
 import UsersFilter from "@/components/users/UsersFilter";
+import { ROWS_PER_PAGE } from "@/constants";
 import { useGetUsersQuery, useUpdateUserMutation } from "@/store/api/user";
 import { selectUsersFilterSlice, setUsersFilterSlice } from "@/store/slices";
 import type { ActionData, User, UsersFilterState } from "@/utils/types";
@@ -90,8 +91,8 @@ export function Users() {
 
       <Paginator
         totalItems={usersData?.totalItems ?? 0}
-        currentPage={usersFilterState.page ?? 0}
-        itemsPerPage={usersFilterState.limit ?? 0}
+        currentPage={usersFilterState.page ?? 1}
+        itemsPerPage={usersFilterState.limit ?? ROWS_PER_PAGE}
         onPageChange={handleOnFilterChange}
         onItemsPerPageChange={handleOnFilterChange}
       />

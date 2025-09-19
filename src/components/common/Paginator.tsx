@@ -113,7 +113,9 @@ export function Paginator({
           ) : (
             <button
               key={index}
-              onClick={() => onPageChange?.({ page: Number(page) })}
+              onClick={() =>
+                page !== currentPage && onPageChange?.({ page: Number(page) })
+              }
               className={cn(
                 "border min-w-8 py-1 px-2 text-center",
                 page === currentPage
