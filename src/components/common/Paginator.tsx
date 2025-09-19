@@ -94,7 +94,7 @@ export function Paginator({
       <div className="flex flex-row flex-nowrap items-center justify-center gap-0">
         {/* Botón anterior */}
         <button
-          onClick={() => onPageChange?.({ page: currentPage - 2 })}
+          onClick={() => onPageChange?.({ page: currentPage - 1 })}
           disabled={currentPage <= 1}
           className={cn(
             "border rounded-tl-sm rounded-bl-sm p-2",
@@ -113,7 +113,7 @@ export function Paginator({
           ) : (
             <button
               key={index}
-              onClick={() => onPageChange?.({ page: Number(page) - 1 })}
+              onClick={() => onPageChange?.({ page: Number(page) })}
               className={cn(
                 "border min-w-8 py-1 px-2 text-center",
                 page === currentPage
@@ -128,7 +128,7 @@ export function Paginator({
 
         {/* Botón siguiente */}
         <button
-          onClick={() => onPageChange?.({ page: currentPage })}
+          onClick={() => onPageChange?.({ page: currentPage + 1 })}
           disabled={currentPage >= totalPages}
           className={cn(
             "border rounded-tr-sm rounded-br-sm p-2",

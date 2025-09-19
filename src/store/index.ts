@@ -22,13 +22,6 @@ const persistedUserReducer = persistReducer(
   },
   userReducer
 );
-const persistedUsersFilterReducer = persistReducer(
-  {
-    key: "usersFilter",
-    storage,
-  },
-  usersFilterReducer
-);
 
 const middlewares = [authApi.middleware, userApi.middleware];
 
@@ -37,8 +30,9 @@ const store = configureStore({
     [authApi.reducerPath]: authApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
 
+    usersFilter: usersFilterReducer,
+
     user: persistedUserReducer,
-    usersFilter: persistedUsersFilterReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
