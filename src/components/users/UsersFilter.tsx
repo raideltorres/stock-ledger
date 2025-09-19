@@ -1,6 +1,6 @@
 import { selectUsersFilterSlice } from "@/store/slices";
 import type { Role, UsersFilterState, UserStatus } from "@/utils/types";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   Select,
@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useDebouncedCallback } from "@/hooks/useDebouncedCallback";
+import { debounce } from "lodash";
 
 export interface UserFiltersProps {
   onFilterChange?: (filters: UsersFilterState) => void;
@@ -21,7 +21,9 @@ export interface UserFiltersProps {
 export default function UsersFilter({ onFilterChange }: UserFiltersProps) {
   const usersFilterState = useSelector(selectUsersFilterSlice);
 
-  const [text, setText] = useState<string>(usersFilterState.criteria ?? "");
+  const [criteria, setCriteria] = useState<string>(
+    usersFilterState.criteria ?? ""
+  );
 
   const handleChange = useCallback(
     (partial: UsersFilterState) => {
@@ -30,15 +32,18 @@ export default function UsersFilter({ onFilterChange }: UserFiltersProps) {
     [onFilterChange]
   );
 
-  const debouncedHandleNameChange = useDebouncedCallback((value: string) => {
-    handleChange({ criteria: value });
-  }, 300);
+  const handleInputChange = useMemo(
+    () =>
+      debounce((value: string) => {
+        handleChange({ criteria: value });
+      }, 500),
+    [handleChange]
+  );
 
-  useEffect(() => {
-    if (text !== usersFilterState.criteria) {
-      debouncedHandleNameChange(text);
-    }
-  }, [debouncedHandleNameChange, text, usersFilterState.criteria]);
+  const onChangeCriteria = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCriteria(e.target.value);
+    handleInputChange(e.target.value);
+  };
 
   return (
     <div className="w-full flex flex-row flex-wrap gap-4 bg-gray-100 p-2 rounded-md">
@@ -47,9 +52,9 @@ export default function UsersFilter({ onFilterChange }: UserFiltersProps) {
         <Input
           type="text"
           placeholder="Buscar nombre o email"
-          value={text}
+          value={criteria}
           className="w-[180px]"
-          onChange={(e) => setText(e.target.value)}
+          onChange={onChangeCriteria}
         />
       </div>
 

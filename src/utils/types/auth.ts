@@ -11,6 +11,10 @@ export interface SignUpArgs {
   password: string;
 }
 
+export interface ChangePasswordArgs {
+  password: string;
+}
+
 export interface AuthResponse {
   access_token?: string;
   data: User;

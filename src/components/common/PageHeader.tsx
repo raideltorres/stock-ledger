@@ -1,11 +1,11 @@
 import { cn } from "@/lib/utils";
 
-type PageHeaderProps = {
+export type PageHeaderProps = {
   text: string;
   textClassName?: string;
 };
 
-const PageHeader = ({ text, textClassName }: PageHeaderProps) => {
+export function PageHeader({ text, textClassName }: PageHeaderProps) {
   return (
     <div
       className={cn(
@@ -16,7 +16,4 @@ const PageHeader = ({ text, textClassName }: PageHeaderProps) => {
       <h1 className="text-2xl font-bold  px-6">{text}</h1>
     </div>
   );
-};
-
-export type { PageHeaderProps };
-export { PageHeader };
+}

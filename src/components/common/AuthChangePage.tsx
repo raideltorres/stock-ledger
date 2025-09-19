@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 
-type AuthChangePageProps = {
+export type AuthChangePageProps = {
   text: string;
   textClassName?: string;
   linkTextText?: string;
@@ -9,13 +9,13 @@ type AuthChangePageProps = {
   linkTextClassName?: string;
 };
 
-const AuthChangePage = ({
+export function AuthChangePage({
   text,
   textClassName,
   linkTextText,
   linkTextHref,
   linkTextClassName,
-}: AuthChangePageProps) => {
+}: AuthChangePageProps) {
   return (
     <span
       className={cn(
@@ -35,7 +35,4 @@ const AuthChangePage = ({
       </Link>
     </span>
   );
-};
-
-export type { AuthChangePageProps };
-export { AuthChangePage };
+}

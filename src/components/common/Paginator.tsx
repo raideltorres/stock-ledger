@@ -20,14 +20,14 @@ export type PaginatorProps = {
   onItemsPerPageChange?: (partial: BaseFiltersState) => void;
 };
 
-export const Paginator = ({
+export function Paginator({
   totalItems = 0,
   currentPage = ROWS_PER_PAGE,
   itemsPerPage = 10,
   itemsPerPageOptions = ROWS_PER_PAGE_OPTIONS,
   onPageChange,
   onItemsPerPageChange,
-}: PaginatorProps) => {
+}: PaginatorProps) {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const getPages = () => {
@@ -140,4 +140,4 @@ export const Paginator = ({
       </div>
     </div>
   );
-};
+}

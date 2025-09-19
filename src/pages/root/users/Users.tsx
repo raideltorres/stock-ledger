@@ -1,11 +1,18 @@
 import { ListItemSkeleton } from "@/components/common/ListItemSkeleton";
 import { PageHeader } from "@/components/common/PageHeader";
 import { Paginator } from "@/components/common/paginator";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import NewUser from "@/components/users/NewUser";
 import { UserListItem } from "@/components/users/UserListItem";
 import UsersFilter from "@/components/users/UsersFilter";
 import { useGetUsersQuery, useUpdateUserMutation } from "@/store/api/user";
 import { selectUsersFilterSlice, setUsersFilterSlice } from "@/store/slices";
 import type { ActionData, User, UsersFilterState } from "@/utils/types";
+import { UserPlus } from "lucide-react";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -48,6 +55,21 @@ export function Users() {
       <PageHeader text="Usuarios" />
 
       <UsersFilter onFilterChange={handleOnFilterChange} />
+
+      {/* new user */}
+      <div className="w-full flex flex-row items-center justify-end">
+        <Popover>
+          <PopoverTrigger asChild>
+            <UserPlus
+              size={36}
+              className="bg-gray-300 p-1 border rounded-full shadow cursor-pointer"
+            />
+          </PopoverTrigger>
+          <PopoverContent>
+            <NewUser />
+          </PopoverContent>
+        </Popover>
+      </div>
 
       <div className="w-full flex flex-1 flex-col gap-2">
         {isFetchingUsers && <ListItemSkeleton />}

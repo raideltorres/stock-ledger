@@ -114,7 +114,10 @@ export function SignUp() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">
+            <Button
+              type="submit"
+              className="w-full"
+            >
               Registrarse
             </Button>
 

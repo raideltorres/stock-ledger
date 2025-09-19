@@ -10,6 +10,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import UserChangeStatus from "./UserChangeStatus";
+import UserChangePassword from "./UserChangePassword";
 
 export interface UserListItemProps {
   user: User;
@@ -76,7 +77,16 @@ export function UserListItem({ user, onTap, onAction }: UserListItemProps) {
         </Popover>
 
         {/* change password */}
-        <Shield />
+        <Popover>
+          <PopoverTrigger asChild>
+            <Shield />
+          </PopoverTrigger>
+          <PopoverContent>
+            <UserChangePassword
+              onChange={(partial) => handleOnAction?.(partial, "EDIT")}
+            />
+          </PopoverContent>
+        </Popover>
       </div>
     </Card>
   );

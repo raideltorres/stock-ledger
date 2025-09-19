@@ -3,6 +3,7 @@ import { getStringFromLocalStorage } from "@/utils/data-storage/local-storage";
 import type {
   ActionData,
   GetResponse,
+  SignUpArgs,
   User,
   UsersFilterState,
 } from "@/utils/types";
@@ -46,6 +47,14 @@ export const userApi = createApi({
       }),
       providesTags: ["User"],
     }),
+    createUser: builder.mutation<User, SignUpArgs>({
+      query: (data) => ({
+        url: `/users`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["UserList"],
+    }),
     updateUser: builder.mutation<User, ActionData<User>>({
       query: (data) => ({
         url: `/users/${data._id}/upsert`,
@@ -61,5 +70,6 @@ export const {
   useGetUsersQuery,
   useGetCurrentUserProfileQuery,
   useGetUserProfileQuery,
+  useCreateUserMutation,
   useUpdateUserMutation,
 } = userApi;
