@@ -1,5 +1,5 @@
-import { selectUsersFilterSlice } from "@/store/slices";
-import type { Role, UsersFilterState, UserStatus } from "@/utils/types";
+import { selectEntitiesFilterSlice } from "@/store/slices";
+import type { EntitiesFilterState, EntityStatus } from "@/utils/types";
 import { useCallback, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -14,19 +14,21 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { debounce } from "lodash";
 
-export interface UsersFilterProps {
-  onFilterChange?: (filters: UsersFilterState) => void;
+export interface EntitiesFilterProps {
+  onFilterChange?: (filters: EntitiesFilterState) => void;
 }
 
-export default function UsersFilter({ onFilterChange }: UsersFilterProps) {
-  const usersFilterState = useSelector(selectUsersFilterSlice);
+export default function EntitiesFilter({
+  onFilterChange,
+}: EntitiesFilterProps) {
+  const entitiesFilterState = useSelector(selectEntitiesFilterSlice);
 
   const [criteria, setCriteria] = useState<string>(
-    usersFilterState.criteria ?? ""
+    entitiesFilterState.criteria ?? ""
   );
 
   const handleChange = useCallback(
-    (partial: UsersFilterState) => {
+    (partial: EntitiesFilterState) => {
       onFilterChange?.(partial);
     },
     [onFilterChange]
@@ -51,7 +53,7 @@ export default function UsersFilter({ onFilterChange }: UsersFilterProps) {
         <Label>Buscar</Label>
         <Input
           type="text"
-          placeholder="Buscar nombre o email"
+          placeholder="Buscar nombre o descripción"
           value={criteria}
           className="w-[180px]"
           onChange={onChangeCriteria}
@@ -61,8 +63,8 @@ export default function UsersFilter({ onFilterChange }: UsersFilterProps) {
       <div className="flex flex-col gap-1">
         <Label>Estado</Label>
         <Select
-          onValueChange={(status: UserStatus) => handleChange({ status })}
-          defaultValue={usersFilterState.status}
+          onValueChange={(status: EntityStatus) => handleChange({ status })}
+          defaultValue={entitiesFilterState.status}
         >
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Seleccione un estado" />
@@ -70,29 +72,9 @@ export default function UsersFilter({ onFilterChange }: UsersFilterProps) {
           <SelectContent>
             <SelectGroup>
               <SelectItem value="ALL">Todos</SelectItem>
-              <SelectItem value="PENDING">Pendiente</SelectItem>
               <SelectItem value="ACTIVE">Activo</SelectItem>
               <SelectItem value="INACTIVE">Inactivo</SelectItem>
               <SelectItem value="DELETED">Eliminado</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="flex flex-col gap-1">
-        <Label>Rol</Label>
-        <Select
-          onValueChange={(role: Role) => handleChange({ role })}
-          defaultValue={usersFilterState.role}
-        >
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Seleccione un rol" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="ALL">Todos</SelectItem>
-              <SelectItem value="USER">Usuario</SelectItem>
-              <SelectItem value="ADMIN">Administrador</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>

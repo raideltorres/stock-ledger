@@ -21,11 +21,11 @@ import { AuthChangePage } from "@/components/common/AuthChangePage";
 import type { AuthResponse, ErrorResponse } from "@/utils/types";
 
 const registerSchema = z.object({
-  name: z.string().nonempty("Campo requerido").min(2, "Nombre muy corto"),
-  email: z.string().nonempty("Campo requerido").email("Correo no válido"),
+  name: z.string().min(1, "Campo requerido").min(2, "Nombre muy corto"),
+  email: z.string().min(1, "Campo requerido").email("Correo no válido"),
   password: z
     .string()
-    .nonempty("Campo requerido")
+    .min(1, "Campo requerido")
     .min(6, "Mínimo 6 caracteres"),
 });
 

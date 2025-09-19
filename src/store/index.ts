@@ -12,8 +12,15 @@ import {
 import storage from "redux-persist/lib/storage";
 
 import { authApi } from "./api/auth";
+import { entityApi } from "./api/entity";
+import { locationApi } from "./api/location";
 import { userApi } from "./api/user";
-import { userReducer, usersFilterReducer } from "./slices";
+import {
+  entitiesFilterReducer,
+  locationsFilterReducer,
+  userReducer,
+  usersFilterReducer,
+} from "./slices";
 
 const persistedUserReducer = persistReducer(
   {
@@ -23,13 +30,22 @@ const persistedUserReducer = persistReducer(
   userReducer
 );
 
-const middlewares = [authApi.middleware, userApi.middleware];
+const middlewares = [
+  authApi.middleware,
+  entityApi.middleware,
+  locationApi.middleware,
+  userApi.middleware,
+];
 
 const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
+    [entityApi.reducerPath]: entityApi.reducer,
+    [locationApi.reducerPath]: locationApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
 
+    entitiesFilter: entitiesFilterReducer,
+    locationsFilter: locationsFilterReducer,
     usersFilter: usersFilterReducer,
 
     user: persistedUserReducer,

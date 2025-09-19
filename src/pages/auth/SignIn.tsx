@@ -22,10 +22,10 @@ import type { AuthResponse, ErrorResponse } from "@/utils/types";
 import { AuthChangePage } from "@/components/common/AuthChangePage";
 
 const loginSchema = z.object({
-  email: z.string().nonempty("Campo requerido").email("Correo no válido"),
+  email: z.string().min(1, "Campo requerido").email("Correo no válido"),
   password: z
     .string()
-    .nonempty("Campo requerido")
+    .min(1, "Campo requerido")
     .min(6, "Mínimo 6 caracteres"),
 });
 

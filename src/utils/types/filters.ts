@@ -1,4 +1,10 @@
-import type { UserStatus } from "./common";
+import type {
+  EntityStatus,
+  LocationStatus,
+  LocationType,
+  Role,
+  UserStatus,
+} from "./common";
 
 export interface BaseFiltersState {
   page?: number;
@@ -8,5 +14,17 @@ export interface BaseFiltersState {
 export interface UsersFilterState extends BaseFiltersState {
   criteria?: string;
   status?: UserStatus;
-  role?: string;
+  role?: Role;
+}
+
+export interface EntitiesFilterState extends BaseFiltersState {
+  criteria?: string;
+  status?: EntityStatus;
+}
+
+export interface LocationsFilterState extends BaseFiltersState {
+  entity?: string;
+  criteria?: string;
+  type?: LocationType;
+  status?: LocationStatus;
 }

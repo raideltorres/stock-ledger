@@ -1,6 +1,6 @@
 import { ListItemSkeleton } from "@/components/common/ListItemSkeleton";
 import { PageHeader } from "@/components/common/PageHeader";
-import { Paginator } from "@/components/common/paginator";
+import { Paginator } from "@/components/common/Paginator";
 import {
   Popover,
   PopoverContent,
