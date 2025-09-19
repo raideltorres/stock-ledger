@@ -60,12 +60,12 @@ const menuItems: SideMenuItem[] = [
   },
   {
     title: "Clientes",
-    url: "/admin/clients",
+    url: "/admin/customers",
     icon: <CircleUser />,
   },
   {
     title: "Proveedores",
-    url: "/admin/suppliers",
+    url: "/admin/providers",
     icon: <SquareUser />,
   },
 ];

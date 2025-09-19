@@ -2,15 +2,15 @@ import { ACCESS_TOKEN_KEY } from "@/constants";
 import { getStringFromLocalStorage } from "@/utils/data-storage/local-storage";
 import type {
   ActionData,
+  Provider,
+  ProviderArgs,
+  ProvidersFilterState,
   GetResponse,
-  Location,
-  LocationArgs,
-  LocationsFilterState,
 } from "@/utils/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const locationApi = createApi({
-  reducerPath: "locationApi",
+export const providersApi = createApi({
+  reducerPath: "providersApi",
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_BASE_URL,
     prepareHeaders: (headers) => {
@@ -23,37 +23,37 @@ export const locationApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["LocationList", "Location"],
+  tagTypes: ["ProviderList", "Provider"],
   endpoints: (builder) => ({
-    getLocation: builder.query<GetResponse<Location>, LocationsFilterState>({
+    getProvider: builder.query<GetResponse<Provider>, ProvidersFilterState>({
       query: (filter) => ({
-        url: "/location",
+        url: "/providers",
         method: "GET",
         params: filter,
       }),
-      providesTags: ["LocationList"],
+      providesTags: ["ProviderList"],
     }),
-    createLocation: builder.mutation<Location, LocationArgs>({
+    createProvider: builder.mutation<Provider, ProviderArgs>({
       query: (data) => ({
-        url: `/location`,
+        url: `/providers`,
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["LocationList"],
+      invalidatesTags: ["ProviderList"],
     }),
-    updateLocation: builder.mutation<Location, ActionData<LocationArgs>>({
+    updateProvider: builder.mutation<Provider, ActionData<ProviderArgs>>({
       query: (data) => ({
-        url: `/location/${data._id}/upsert`,
+        url: `/providers/${data._id}/upsert`,
         method: "PUT",
         body: data.partial,
       }),
-      invalidatesTags: ["LocationList", "Location"],
+      invalidatesTags: ["ProviderList", "Provider"],
     }),
   }),
 });
 
 export const {
-  useGetLocationQuery,
-  useCreateLocationMutation,
-  useUpdateLocationMutation,
-} = locationApi;
+  useGetProviderQuery,
+  useCreateProviderMutation,
+  useUpdateProviderMutation,
+} = providersApi;

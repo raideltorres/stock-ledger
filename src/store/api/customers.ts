@@ -2,15 +2,15 @@ import { ACCESS_TOKEN_KEY } from "@/constants";
 import { getStringFromLocalStorage } from "@/utils/data-storage/local-storage";
 import type {
   ActionData,
+  Customer,
+  CustomerArgs,
+  CustomersFilterState,
   GetResponse,
-  Location,
-  LocationArgs,
-  LocationsFilterState,
 } from "@/utils/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const locationApi = createApi({
-  reducerPath: "locationApi",
+export const customersApi = createApi({
+  reducerPath: "customersApi",
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_BASE_URL,
     prepareHeaders: (headers) => {
@@ -23,37 +23,37 @@ export const locationApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["LocationList", "Location"],
+  tagTypes: ["CustomerList", "Customer"],
   endpoints: (builder) => ({
-    getLocation: builder.query<GetResponse<Location>, LocationsFilterState>({
+    getCustomer: builder.query<GetResponse<Customer>, CustomersFilterState>({
       query: (filter) => ({
-        url: "/location",
+        url: "/customers",
         method: "GET",
         params: filter,
       }),
-      providesTags: ["LocationList"],
+      providesTags: ["CustomerList"],
     }),
-    createLocation: builder.mutation<Location, LocationArgs>({
+    createCustomer: builder.mutation<Customer, CustomerArgs>({
       query: (data) => ({
-        url: `/location`,
+        url: `/customers`,
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["LocationList"],
+      invalidatesTags: ["CustomerList"],
     }),
-    updateLocation: builder.mutation<Location, ActionData<LocationArgs>>({
+    updateCustomer: builder.mutation<Customer, ActionData<CustomerArgs>>({
       query: (data) => ({
-        url: `/location/${data._id}/upsert`,
+        url: `/customers/${data._id}/upsert`,
         method: "PUT",
         body: data.partial,
       }),
-      invalidatesTags: ["LocationList", "Location"],
+      invalidatesTags: ["CustomerList", "Customer"],
     }),
   }),
 });
 
 export const {
-  useGetLocationQuery,
-  useCreateLocationMutation,
-  useUpdateLocationMutation,
-} = locationApi;
+  useGetCustomerQuery,
+  useCreateCustomerMutation,
+  useUpdateCustomerMutation,
+} = customersApi;

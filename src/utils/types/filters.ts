@@ -1,7 +1,9 @@
 import type {
+  CustomerStatus,
   EntityStatus,
   LocationStatus,
   LocationType,
+  ProviderStatus,
   Role,
   UserStatus,
 } from "./common";
@@ -27,4 +29,14 @@ export interface LocationsFilterState extends BaseFiltersState {
   criteria?: string;
   type?: LocationType;
   status?: LocationStatus;
+}
+
+export interface CustomersFilterState extends BaseFiltersState {
+  criteria?: string;
+  status?: CustomerStatus;
+}
+
+export interface ProvidersFilterState extends BaseFiltersState {
+  criteria?: string;
+  status?: ProviderStatus;
 }

@@ -2,11 +2,11 @@ import { ACCESS_TOKEN_KEY } from "@/constants";
 import { getStringFromLocalStorage } from "@/utils/data-storage/local-storage";
 import type {
   ActionData,
-  GetResponse,
-  Entity,
   EntitiesFilterState,
+  Entity,
+  EntityArgs,
+  GetResponse,
 } from "@/utils/types";
-import type { EntityArgs } from "@/utils/types/entity";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const entityApi = createApi({
