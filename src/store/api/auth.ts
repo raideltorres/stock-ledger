@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN_KEY } from "@/constants/local-storage";
+import { ACCESS_TOKEN_KEY } from "@/constants";
 import { getStringFromLocalStorage } from "@/utils/data-storage/local-storage";
 import type {
   AuthResponse,

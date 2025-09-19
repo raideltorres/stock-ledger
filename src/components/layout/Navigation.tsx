@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { NavUser } from "../common/nav-user";
+import { NavUser } from "../common/NavUser";
 import { selectUserSlice } from "@/store/slices";
 
 export function Navigation() {

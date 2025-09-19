@@ -17,7 +17,7 @@ import { useCallback } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/useToast";
 import { useSignUpMutation } from "@/store/api/auth";
-import { AuthChangePage } from "@/components/common/auth-change-page";
+import { AuthChangePage } from "@/components/common/AuthChangePage";
 import type { AuthResponse, ErrorResponse } from "@/utils/types";
 
 const registerSchema = z.object({

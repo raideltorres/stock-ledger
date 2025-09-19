@@ -1,9 +1,12 @@
-export type Role = "ADMIN" | "USER";
+export type Role = "ALL" | "ADMIN" | "USER";
+export type UserStatus = "ALL" | "PENDING" | "ACTIVE" | "INACTIVE" | "DELETED";
 export type Action =
   | "GO_TO_SALES"
   | "GO_TO_PROFILE"
   | "GO_TO_NOTIFICATIONS"
-  | "LOG_OUT";
+  | "LOG_OUT"
+  | "EDIT"
+  | "DELETE";
 
 export interface ErrorDetails {
   error: string;
@@ -17,7 +20,7 @@ export interface ErrorResponse {
 }
 
 export interface Identifiable {
-  _id: string;
+  _id?: string;
 }
 
 export interface Counts {
@@ -25,11 +28,10 @@ export interface Counts {
 }
 
 export interface GetResponse<T> {
-  count: number;
   data: T[];
-  page: number;
-  pageCount: number;
-  total: number;
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
 }
 
 export interface SideMenuItem {
@@ -37,4 +39,9 @@ export interface SideMenuItem {
   url?: string;
   action?: Action;
   icon?: React.ReactNode;
+}
+
+export interface ActionData<T> extends Identifiable {
+  partial?: T;
+  action?: Action;
 }

@@ -13,7 +13,7 @@ import storage from "redux-persist/lib/storage";
 
 import { authApi } from "./api/auth";
 import { userApi } from "./api/user";
-import { userReducer } from "./slices";
+import { userReducer, usersFilterReducer } from "./slices";
 
 const persistedUserReducer = persistReducer(
   {
@@ -21,6 +21,13 @@ const persistedUserReducer = persistReducer(
     storage,
   },
   userReducer
+);
+const persistedUsersFilterReducer = persistReducer(
+  {
+    key: "usersFilter",
+    storage,
+  },
+  usersFilterReducer
 );
 
 const middlewares = [authApi.middleware, userApi.middleware];
@@ -31,6 +38,7 @@ const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
 
     user: persistedUserReducer,
+    usersFilter: persistedUsersFilterReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
