@@ -42,7 +42,7 @@ export default function NewLocation({ entities = [] }: NewLocationProps) {
   const form = useForm<NewLocationValues>({
     resolver: zodResolver(newEntitySchema),
     defaultValues: {
-      entity: entities[0]._id ?? "",
+      entity: entities[0]?._id ?? "",
       type: "SALES_FLOOR",
       name: "",
       description: "",

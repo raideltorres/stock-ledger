@@ -1,4 +1,4 @@
-import type { Customer, CustomerStatus } from "@/utils/types";
+import type { Customer, CustomerArgs, CustomerStatus } from "@/utils/types";
 import {
   Select,
   SelectContent,
@@ -10,7 +10,7 @@ import {
 
 export interface CustomerChangeStatusProps {
   customer: Customer;
-  onChange?: (partial: Customer) => void;
+  onChange?: (partial: CustomerArgs) => void;
 }
 
 export default function CustomerChangeStatus({

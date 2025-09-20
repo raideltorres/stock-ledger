@@ -27,7 +27,7 @@ export function CustomerListItem({
   }, [onTap, customer]);
 
   const handleOnAction = useCallback(
-    (partial: Customer, action: Action) => {
+    (partial: CustomerArgs, action: Action) => {
       onAction?.({ _id: customer._id, partial, action });
     },
     [onAction, customer]

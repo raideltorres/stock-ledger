@@ -5,7 +5,7 @@ import type {
   LocationStatus,
   Entity,
 } from "@/utils/types";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   Select,
@@ -48,6 +48,13 @@ export default function LocationsFilter({
       }, 500),
     [handleChange]
   );
+
+  // Clean up the memorized handleInputChange
+  useEffect(() => {
+    return () => {
+      handleInputChange.cancel();
+    };
+  }, [handleInputChange]);
 
   const onChangeCriteria = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCriteria(e.target.value);
