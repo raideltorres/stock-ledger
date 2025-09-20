@@ -14,36 +14,31 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useCreateUserMutation } from "@/store/api/user";
+import { useCreateEntityMutation } from "@/store/api/entity";
 
-const newUserSchema = z.object({
-  name: z.string().min(1, "Campo requerido").min(2, "Nombre muy corto"),
-  email: z.string().min(1, "Campo requerido").email("Correo no válido"),
-  password: z
-    .string()
-    .min(1, "Campo requerido")
-    .min(6, "Mínimo 6 caracteres"),
+const newEntitySchema = z.object({
+  name: z.string().min(1, "Campo requerido").min(4, "Nombre muy corto"),
+  description: z.string(),
 });
 
-type NewUserValues = z.infer<typeof newUserSchema>;
+type NewEntityValues = z.infer<typeof newEntitySchema>;
 
-export default function NewUser() {
+export default function NewEntity() {
   const toast = useToast();
-  const form = useForm<NewUserValues>({
-    resolver: zodResolver(newUserSchema),
+  const form = useForm<NewEntityValues>({
+    resolver: zodResolver(newEntitySchema),
     defaultValues: {
       name: "",
-      email: "",
-      password: "",
+      description: "",
     },
   });
 
-  const [createUser] = useCreateUserMutation();
+  const [createEntity] = useCreateEntityMutation();
 
-  const handleNewUser = useCallback(
-    async (data: NewUserValues) => {
+  const handleNewEntity = useCallback(
+    async (data: NewEntityValues) => {
       try {
-        await createUser(data).unwrap();
+        await createEntity(data).unwrap();
         form.reset();
       } catch (error) {
         const errorData = error as ErrorResponse;
@@ -55,7 +50,7 @@ export default function NewUser() {
         });
       }
     },
-    [createUser, form, toast]
+    [createEntity, form, toast]
   );
 
   return (
@@ -66,7 +61,7 @@ export default function NewUser() {
       <div className="grid gap-2">
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(handleNewUser)}
+            onSubmit={form.handleSubmit(handleNewEntity)}
             className="space-y-6"
           >
             <FormField
@@ -76,7 +71,7 @@ export default function NewUser() {
                 <FormItem>
                   <FormLabel>Nombre</FormLabel>
                   <FormControl>
-                    <Input placeholder="Nombre completo" {...field} />
+                    <Input placeholder="Nombre de la entidad" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -84,34 +79,18 @@ export default function NewUser() {
             />
             <FormField
               control={form.control}
-              name="email"
+              name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Correo electrónico</FormLabel>
+                  <FormLabel>Descripción</FormLabel>
                   <FormControl>
-                    <Input placeholder="correo@ejemplo.com" {...field} />
+                    <Input placeholder="Descripción de la entidad" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Contraseña</FormLabel>
-                  <FormControl>
-                    <Input type="password" placeholder="••••••••" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button
-              type="submit"
-              className="w-full"
-            >
+            <Button type="submit" className="w-full">
               Crear
             </Button>
           </form>

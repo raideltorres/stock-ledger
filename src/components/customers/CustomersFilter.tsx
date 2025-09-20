@@ -1,5 +1,5 @@
-import { selectUsersFilterSlice } from "@/store/slices";
-import type { Role, UsersFilterState, UserStatus } from "@/utils/types";
+import { selectCustomersFilterSlice } from "@/store/slices";
+import type { CustomersFilterState, CustomerStatus } from "@/utils/types";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -14,19 +14,21 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { debounce } from "lodash";
 
-export interface UsersFilterProps {
-  onFilterChange?: (filters: UsersFilterState) => void;
+export interface CustomersFilterProps {
+  onFilterChange?: (filters: CustomersFilterState) => void;
 }
 
-export default function UsersFilter({ onFilterChange }: UsersFilterProps) {
-  const usersFilterState = useSelector(selectUsersFilterSlice);
+export default function CustomersFilter({
+  onFilterChange,
+}: CustomersFilterProps) {
+  const customersFilterState = useSelector(selectCustomersFilterSlice);
 
   const [criteria, setCriteria] = useState<string>(
-    usersFilterState.criteria ?? ""
+    customersFilterState.criteria ?? ""
   );
 
   const handleChange = useCallback(
-    (partial: UsersFilterState) => {
+    (partial: CustomersFilterState) => {
       onFilterChange?.(partial);
     },
     [onFilterChange]
@@ -68,8 +70,8 @@ export default function UsersFilter({ onFilterChange }: UsersFilterProps) {
       <div className="flex flex-col gap-1">
         <Label>Estado</Label>
         <Select
-          onValueChange={(status: UserStatus) => handleChange({ status })}
-          defaultValue={usersFilterState.status}
+          onValueChange={(status: CustomerStatus) => handleChange({ status })}
+          defaultValue={customersFilterState.status}
         >
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Seleccione un estado" />
@@ -77,29 +79,9 @@ export default function UsersFilter({ onFilterChange }: UsersFilterProps) {
           <SelectContent>
             <SelectGroup>
               <SelectItem value="ALL">Todos</SelectItem>
-              <SelectItem value="PENDING">Pendiente</SelectItem>
               <SelectItem value="ACTIVE">Activo</SelectItem>
               <SelectItem value="INACTIVE">Inactivo</SelectItem>
               <SelectItem value="DELETED">Eliminado</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="flex flex-col gap-1">
-        <Label>Rol</Label>
-        <Select
-          onValueChange={(role: Role) => handleChange({ role })}
-          defaultValue={usersFilterState.role}
-        >
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Seleccione un rol" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="ALL">Todos</SelectItem>
-              <SelectItem value="USER">Usuario</SelectItem>
-              <SelectItem value="ADMIN">Administrador</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>

@@ -1,33 +1,36 @@
 import { Card } from "@/components/ui/card";
-import type { Action, ActionData, User } from "@/utils/types";
+import type { Action, ActionData, Provider, ProviderArgs } from "@/utils/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getInitials } from "@/lib/utils";
-import { Shield, UserCogIcon } from "lucide-react";
+import { SquareUser } from "lucide-react";
 import { useCallback } from "react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import UserChangeStatus from "./UserChangeStatus";
-import UserChangePassword from "./UserChangePassword";
+import ProviderChangeStatus from "./ProviderChangeStatus";
 
-export interface UserListItemProps {
-  user: User;
-  onTap?: (data: User) => void;
-  onAction?: (data: ActionData<User>) => void;
+export interface ProviderListItemProps {
+  provider: Provider;
+  onTap?: (data: Provider) => void;
+  onAction?: (data: ActionData<ProviderArgs>) => void;
 }
 
-export function UserListItem({ user, onTap, onAction }: UserListItemProps) {
+export function ProviderListItem({
+  provider,
+  onTap,
+  onAction,
+}: ProviderListItemProps) {
   const handleOnTap = useCallback(() => {
-    onTap?.(user);
-  }, [onTap, user]);
+    onTap?.(provider);
+  }, [onTap, provider]);
 
   const handleOnAction = useCallback(
-    (partial: User, action: Action) => {
-      onAction?.({ _id: user._id, partial, action });
+    (partial: Provider, action: Action) => {
+      onAction?.({ _id: provider._id, partial, action });
     },
-    [onAction, user]
+    [onAction, provider]
   );
 
   return (
@@ -37,25 +40,25 @@ export function UserListItem({ user, onTap, onAction }: UserListItemProps) {
     >
       <div className="min-w-1/3 flex flex-1 items-center gap-2 text-left text-sm">
         <Avatar className="h-12 w-12 rounded-lg">
-          <AvatarImage src={user.avatar} alt={user.name} />
+          <AvatarImage src={provider.avatar} alt={provider.name} />
           <AvatarFallback className="rounded-lg">
-            {getInitials(user.name ?? "User")}
+            {getInitials(provider.name ?? "Provider")}
           </AvatarFallback>
         </Avatar>
         <div className="grid flex-1 text-left text-sm leading-tight">
-          <span className="truncate font-medium">{user.name}</span>
+          <span className="truncate font-medium">{provider.name}</span>
           <span className="text-muted-foreground truncate text-xs">
-            {user.email}
+            {provider.email}
           </span>
         </div>
       </div>
 
       <div className="grid flex-1 text-center text-sm leading-tight">
         <span className="text-muted-foreground truncate text-xs">
-          {user.role}
+          {provider.status}
         </span>
         <span className="text-muted-foreground truncate text-xs">
-          {user.status}
+          {provider.description}
         </span>
       </div>
 
@@ -66,23 +69,11 @@ export function UserListItem({ user, onTap, onAction }: UserListItemProps) {
         {/* status */}
         <Popover>
           <PopoverTrigger asChild>
-            <UserCogIcon />
+            <SquareUser />
           </PopoverTrigger>
           <PopoverContent>
-            <UserChangeStatus
-              user={user}
-              onChange={(partial) => handleOnAction?.(partial, "EDIT")}
-            />
-          </PopoverContent>
-        </Popover>
-
-        {/* change password */}
-        <Popover>
-          <PopoverTrigger asChild>
-            <Shield />
-          </PopoverTrigger>
-          <PopoverContent>
-            <UserChangePassword
+            <ProviderChangeStatus
+              provider={provider}
               onChange={(partial) => handleOnAction?.(partial, "EDIT")}
             />
           </PopoverContent>

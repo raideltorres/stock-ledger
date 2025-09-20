@@ -14,36 +14,33 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useCreateUserMutation } from "@/store/api/user";
+import { useCreateCustomerMutation } from "@/store/api/customers";
 
-const newUserSchema = z.object({
+const newCustomerSchema = z.object({
   name: z.string().min(1, "Campo requerido").min(2, "Nombre muy corto"),
-  email: z.string().min(1, "Campo requerido").email("Correo no válido"),
-  password: z
-    .string()
-    .min(1, "Campo requerido")
-    .min(6, "Mínimo 6 caracteres"),
+  email: z.string().email("Correo no válido"),
+  description: z.string(),
 });
 
-type NewUserValues = z.infer<typeof newUserSchema>;
+type NewCustomerValues = z.infer<typeof newCustomerSchema>;
 
-export default function NewUser() {
+export default function NewCustomer() {
   const toast = useToast();
-  const form = useForm<NewUserValues>({
-    resolver: zodResolver(newUserSchema),
+  const form = useForm<NewCustomerValues>({
+    resolver: zodResolver(newCustomerSchema),
     defaultValues: {
       name: "",
       email: "",
-      password: "",
+      description: "",
     },
   });
 
-  const [createUser] = useCreateUserMutation();
+  const [createCustomer] = useCreateCustomerMutation();
 
-  const handleNewUser = useCallback(
-    async (data: NewUserValues) => {
+  const handleNewCustomer = useCallback(
+    async (data: NewCustomerValues) => {
       try {
-        await createUser(data).unwrap();
+        await createCustomer(data).unwrap();
         form.reset();
       } catch (error) {
         const errorData = error as ErrorResponse;
@@ -55,7 +52,7 @@ export default function NewUser() {
         });
       }
     },
-    [createUser, form, toast]
+    [createCustomer, form, toast]
   );
 
   return (
@@ -66,7 +63,7 @@ export default function NewUser() {
       <div className="grid gap-2">
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(handleNewUser)}
+            onSubmit={form.handleSubmit(handleNewCustomer)}
             className="space-y-6"
           >
             <FormField
@@ -97,21 +94,18 @@ export default function NewUser() {
             />
             <FormField
               control={form.control}
-              name="password"
+              name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Contraseña</FormLabel>
+                  <FormLabel>Descripción</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="••••••••" {...field} />
+                    <Input placeholder="Descripción" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button
-              type="submit"
-              className="w-full"
-            >
+            <Button type="submit" className="w-full">
               Crear
             </Button>
           </form>

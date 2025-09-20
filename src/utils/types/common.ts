@@ -1,5 +1,10 @@
 export type Role = "ALL" | "ADMIN" | "USER";
 export type UserStatus = "ALL" | "PENDING" | "ACTIVE" | "INACTIVE" | "DELETED";
+export type EntityStatus = "ALL" | "ACTIVE" | "INACTIVE" | "DELETED";
+export type LocationStatus = "ALL" | "ACTIVE" | "INACTIVE" | "DELETED";
+export type LocationType = "ALL" | "WAREHOUSE" | "SALES_FLOOR";
+export type CustomerStatus = "ALL" | "ACTIVE" | "INACTIVE" | "DELETED";
+export type ProviderStatus = "ALL" | "ACTIVE" | "INACTIVE" | "DELETED";
 export type Action =
   | "GO_TO_SALES"
   | "GO_TO_PROFILE"

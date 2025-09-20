@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 const changePasswordSchema = z.object({
   password: z
     .string()
-    .nonempty("Campo requerido")
+    .min(1, "Campo requerido")
     .min(6, "Mínimo 6 caracteres"),
 });
 

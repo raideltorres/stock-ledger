@@ -13,13 +13,13 @@ import { SignUp } from "@/pages/auth/SignUp";
 import { Sales } from "@/pages/root/sales/Sales";
 
 import { Dashboard } from "@/pages/root/dashboard/Dashboard";
-import { Clients } from "@/pages/root/clients/Clients";
+import { Customers } from "@/pages/root/customers/Customers";
 import { Entities } from "@/pages/root/entities/Entities";
 import { Inventory } from "@/pages/root/inventory/Inventory";
 import { Locations } from "@/pages/root/locations/Locations";
 import { PurchaseOrders } from "@/pages/root/po/PurchaseOrders";
 import { SaleOrders } from "@/pages/root/so/SaleOrders";
-import { Suppliers } from "@/pages/root/suppliers/Suppliers";
+import { Providers } from "@/pages/root/providers/Providers";
 import { Users } from "@/pages/root/users/Users";
 
 import Forbidden from "@/pages/Forbidden";
@@ -51,13 +51,13 @@ export default function MainRoutes() {
         {/* Authorization guard section */}
         <Route path="admin" element={<AdministrativeRoute />}>
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="clients" element={<Clients />} />
+          <Route path="customers" element={<Customers />} />
           <Route path="entities" element={<Entities />} />
           <Route path="inventory" element={<Inventory />} />
           <Route path="locations" element={<Locations />} />
           <Route path="po" element={<PurchaseOrders />} />
           <Route path="so" element={<SaleOrders />} />
-          <Route path="suppliers" element={<Suppliers />} />
+          <Route path="providers" element={<Providers />} />
           <Route path="users" element={<Users />} />
         </Route>
       </Route>
