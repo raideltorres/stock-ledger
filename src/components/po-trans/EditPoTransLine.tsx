@@ -49,6 +49,7 @@ export default function EditPoTransLine({
         onChange?.({
           unitPrice,
           qty,
+          amount: unitPrice * qty,
         });
       }
     },

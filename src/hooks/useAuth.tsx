@@ -36,7 +36,7 @@ export function useAuth() {
       );
 
       if (response.access_token) {
-        saveStringToLocalStorage(ACCESS_TOKEN_KEY, response.access_token!);
+        saveStringToLocalStorage(ACCESS_TOKEN_KEY, response.access_token);
 
         if (response.data.role === "ADMIN") {
           navigate("/admin/dashboard");

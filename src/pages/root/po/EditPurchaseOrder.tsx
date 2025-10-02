@@ -41,7 +41,7 @@ export function EditPurchaseOrder() {
 
   const { data: poTransDetailData, isFetching: isFetchingPoTrans } =
     useGetPoTransByIdQuery(transId!, {
-      skip: !transId || !poTransDetailState,
+      skip: !transId,
     });
   const [createProduct] = useCreateProductMutation();
   const [updatePoTrans] = useUpdatePoTransMutation();
@@ -105,12 +105,9 @@ export function EditPurchaseOrder() {
         default: {
           // EDIT
           const lineOnIndex = copyOfEditedLines[index];
-          const calculatedAmount =
-            (data.partial?.unitPrice ?? 1) * (data.partial?.qty ?? 1);
           const editedLine: PoTransLine = {
             ...lineOnIndex,
             ...data.partial,
-            amount: calculatedAmount,
           };
 
           copyOfEditedLines[index] = editedLine;

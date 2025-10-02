@@ -82,7 +82,12 @@ export function PoTransLineItem({
                 line={line}
                 onChange={(partial) =>
                   handleOnAction?.(
-                    { ...line, unitPrice: partial.unitPrice, qty: partial.qty },
+                    {
+                      ...line,
+                      unitPrice: partial.unitPrice,
+                      qty: partial.qty,
+                      amount: partial.amount,
+                    },
                     "EDIT"
                   )
                 }

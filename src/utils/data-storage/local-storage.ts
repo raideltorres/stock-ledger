@@ -1,6 +1,5 @@
 import { ACCESS_TOKEN_KEY } from "@/constants";
 
-
 type StorageKey = string;
 
 export const getStringFromLocalStorage = (key: StorageKey): string | null => {
@@ -47,6 +46,5 @@ export const removeFromLocalStorage = (key: StorageKey): void => {
 };
 
 export const getAccessToken = (): string | null => {
-  if (typeof window === "undefined") return null;
-  return localStorage.getItem(ACCESS_TOKEN_KEY);
+  return getStringFromLocalStorage(ACCESS_TOKEN_KEY);
 };
