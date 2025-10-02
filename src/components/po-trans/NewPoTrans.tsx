@@ -1,4 +1,10 @@
-import type { Entity, ErrorResponse } from "@/utils/types";
+import type {
+  ErrorResponse,
+  Location,
+  PoTrans,
+  Provider,
+  User,
+} from "@/utils/types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -12,7 +18,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -22,40 +27,47 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useCreateLocationMutation } from "@/store/api/location";
+import { useCreatePoTransMutation } from "@/store/api/po-trans";
 
-const newEntitySchema = z.object({
-  entity: z.string().min(1, "Campo requerido"),
-  type: z.enum(["WAREHOUSE", "SALES_FLOOR"]),
-  name: z.string().min(1, "Campo requerido").min(4, "Nombre muy corto"),
-  description: z.string(),
+const newPoTransSchema = z.object({
+  location: z.string().min(1, "Campo requerido"),
+  user: z.string().min(1, "Campo requerido"),
+  provider: z.string().min(1, "Campo requerido"),
 });
 
-type NewLocationValues = z.infer<typeof newEntitySchema>;
+type NewPoTransValues = z.infer<typeof newPoTransSchema>;
 
-export interface NewLocationProps {
-  entities?: Entity[];
+export interface NewPoTransProps {
+  locations?: Location[];
+  users?: User[];
+  providers?: Provider[];
+  onPoTransCreated?: (poTrans: PoTrans) => void;
 }
 
-export default function NewLocation({ entities = [] }: NewLocationProps) {
+export default function NewPoTrans({
+  locations = [],
+  users = [],
+  providers = [],
+  onPoTransCreated,
+}: NewPoTransProps) {
   const toast = useToast();
-  const form = useForm<NewLocationValues>({
-    resolver: zodResolver(newEntitySchema),
+  const form = useForm<NewPoTransValues>({
+    resolver: zodResolver(newPoTransSchema),
     defaultValues: {
-      entity: entities[0]?._id ?? "",
-      type: "SALES_FLOOR",
-      name: "",
-      description: "",
+      location: locations[0]?._id ?? "",
+      user: users[0]?._id ?? "",
+      provider: providers[0]?._id ?? "",
     },
   });
 
-  const [createLocation] = useCreateLocationMutation();
+  const [createPoTrans] = useCreatePoTransMutation();
 
-  const handleNewLocation = useCallback(
-    async (data: NewLocationValues) => {
+  const handleNewPoTrans = useCallback(
+    async (data: NewPoTransValues) => {
       try {
-        await createLocation(data).unwrap();
+        const poTrans = await createPoTrans(data).unwrap();
         form.reset();
+        onPoTransCreated?.(poTrans);
       } catch (error) {
         const errorData = error as ErrorResponse;
         toast.error(errorData.data.error, {
@@ -66,26 +78,26 @@ export default function NewLocation({ entities = [] }: NewLocationProps) {
         });
       }
     },
-    [createLocation, form, toast]
+    [createPoTrans, form, onPoTransCreated, toast]
   );
 
   return (
     <div className="grid gap-4">
       <div className="space-y-2">
-        <h4 className="leading-none font-medium">Crear usuario</h4>
+        <h4 className="leading-none font-medium">Crear orden de compra</h4>
       </div>
       <div className="grid gap-2">
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(handleNewLocation)}
+            onSubmit={form.handleSubmit(handleNewPoTrans)}
             className="space-y-6"
           >
             <FormField
               control={form.control}
-              name="entity"
+              name="location"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Entidad</FormLabel>
+                  <FormLabel>Localidad</FormLabel>
                   <FormControl>
                     <Select
                       {...field}
@@ -93,16 +105,16 @@ export default function NewLocation({ entities = [] }: NewLocationProps) {
                       onValueChange={field.onChange}
                     >
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Seleccione una entidad" />
+                        <SelectValue placeholder="Seleccione una localidad" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          {entities?.map((entity, index) => (
+                          {locations?.map((location, index) => (
                             <SelectItem
-                              key={`entity-option-${index}`}
-                              value={entity._id!}
+                              key={`location-option-${index}`}
+                              value={location._id!}
                             >
-                              {entity.name}
+                              {location.name}
                             </SelectItem>
                           ))}
                         </SelectGroup>
@@ -113,12 +125,13 @@ export default function NewLocation({ entities = [] }: NewLocationProps) {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
-              name="type"
+              name="user"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Tipo de localidad</FormLabel>
+                  <FormLabel>Operador</FormLabel>
                   <FormControl>
                     <Select
                       {...field}
@@ -126,14 +139,18 @@ export default function NewLocation({ entities = [] }: NewLocationProps) {
                       onValueChange={field.onChange}
                     >
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Seleccione un tipo" />
+                        <SelectValue placeholder="Seleccione un operador" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectItem value="WAREHOUSE">Almacén</SelectItem>
-                          <SelectItem value="SALES_FLOOR">
-                            Piso de venta
-                          </SelectItem>
+                          {users?.map((user, index) => (
+                            <SelectItem
+                              key={`user-option-${index}`}
+                              value={user._id!}
+                            >
+                              {user.name}
+                            </SelectItem>
+                          ))}
                         </SelectGroup>
                       </SelectContent>
                     </Select>
@@ -142,35 +159,41 @@ export default function NewLocation({ entities = [] }: NewLocationProps) {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
-              name="name"
+              name="provider"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nombre</FormLabel>
+                  <FormLabel>Proveedor</FormLabel>
                   <FormControl>
-                    <Input placeholder="Nombre de la localidad" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Descripción</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Descripción de la localidad"
+                    <Select
                       {...field}
-                    />
+                      value={field.value}
+                      onValueChange={field.onChange}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Seleccione un proveedor" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          {providers?.map((provider, index) => (
+                            <SelectItem
+                              key={`provider-option-${index}`}
+                              value={provider._id!}
+                            >
+                              {provider.name}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
             <Button type="submit" className="w-full">
               Crear
             </Button>

@@ -18,6 +18,7 @@ import { Entities } from "@/pages/root/entities/Entities";
 import { Inventory } from "@/pages/root/inventory/Inventory";
 import { Locations } from "@/pages/root/locations/Locations";
 import { PurchaseOrders } from "@/pages/root/po/PurchaseOrders";
+import { EditPurchaseOrder } from "@/pages/root/po/EditPurchaseOrder";
 import { SaleOrders } from "@/pages/root/so/SaleOrders";
 import { Providers } from "@/pages/root/providers/Providers";
 import { Users } from "@/pages/root/users/Users";
@@ -56,6 +57,7 @@ export default function MainRoutes() {
           <Route path="inventory" element={<Inventory />} />
           <Route path="locations" element={<Locations />} />
           <Route path="po" element={<PurchaseOrders />} />
+          <Route path="po/:transId/edit" element={<EditPurchaseOrder />} />
           <Route path="so" element={<SaleOrders />} />
           <Route path="providers" element={<Providers />} />
           <Route path="users" element={<Users />} />

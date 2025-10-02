@@ -3,10 +3,12 @@ import type {
   EntityStatus,
   LocationStatus,
   LocationType,
+  PoTransStatus,
   ProviderStatus,
   Role,
   UserStatus,
 } from "./common";
+import type { PoTrans, PoTransLine } from "./po-trans";
 
 export interface BaseFiltersState {
   page?: number;
@@ -39,4 +41,20 @@ export interface CustomersFilterState extends BaseFiltersState {
 export interface ProvidersFilterState extends BaseFiltersState {
   criteria?: string;
   status?: ProviderStatus;
+}
+
+export interface ProductsFilterState extends BaseFiltersState {
+  criteria?: string;
+}
+
+export interface PoTransFilterState extends BaseFiltersState {
+  location?: string;
+  user?: string;
+  provider?: string;
+  status?: PoTransStatus;
+}
+
+export interface PoTransDetailState {
+  order?: PoTrans;
+  editedLines?: PoTransLine[];
 }

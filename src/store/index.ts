@@ -15,12 +15,17 @@ import { authApi } from "./api/auth";
 import { customersApi } from "./api/customers";
 import { entityApi } from "./api/entity";
 import { locationApi } from "./api/location";
+import { poTransApi } from "./api/po-trans";
+import { productsApi } from "./api/products";
 import { providersApi } from "./api/providers";
 import { userApi } from "./api/user";
 import {
   customersFilterReducer,
   entitiesFilterReducer,
   locationsFilterReducer,
+  poTransDetailStateReducer,
+  poTransFilterReducer,
+  productsFilterReducer,
   providersFilterReducer,
   userReducer,
   usersFilterReducer,
@@ -39,6 +44,8 @@ const middlewares = [
   customersApi.middleware,
   entityApi.middleware,
   locationApi.middleware,
+  poTransApi.middleware,
+  productsApi.middleware,
   providersApi.middleware,
   userApi.middleware,
 ];
@@ -49,12 +56,17 @@ const store = configureStore({
     [customersApi.reducerPath]: customersApi.reducer,
     [entityApi.reducerPath]: entityApi.reducer,
     [locationApi.reducerPath]: locationApi.reducer,
+    [poTransApi.reducerPath]: poTransApi.reducer,
+    [productsApi.reducerPath]: productsApi.reducer,
     [providersApi.reducerPath]: providersApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
 
     customersFilter: customersFilterReducer,
     entitiesFilter: entitiesFilterReducer,
     locationsFilter: locationsFilterReducer,
+    poTransDetailState: poTransDetailStateReducer,
+    poTransFilter: poTransFilterReducer,
+    productsFilter: productsFilterReducer,
     providersFilter: providersFilterReducer,
     usersFilter: usersFilterReducer,
 

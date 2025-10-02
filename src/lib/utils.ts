@@ -13,3 +13,10 @@ export function getInitials(username: string) {
     .substring(0, 2)
     .toUpperCase();
 }
+
+export function isNumeric(
+  str: string,
+  regex: RegExp = /^(\d+)?(\.)?(\d+)?$/
+): boolean {
+  return regex.test(str.trim());
+}
