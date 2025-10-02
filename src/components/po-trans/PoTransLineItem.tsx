@@ -51,16 +51,16 @@ export function PoTransLineItem({
 
       <div className="grid flex-1 text-left text-sm leading-tight">
         <span className="text-muted-foreground truncate text-xs">
-          {`cantidad: ${line.qty}`}
+          {`cantidad: ${line.qty ?? 0}`}
         </span>
         <span className="text-muted-foreground truncate text-xs">
-          {`costo: ${line.unitPrice?.toLocaleString("en-US", {
+          {`costo: ${(line.unitPrice ?? 0).toLocaleString("en-US", {
             style: "currency",
             currency: "USD",
           })}`}
         </span>
         <span className="text-red-600 truncate text-xs ">
-          {`subtotal: ${line.amount?.toLocaleString("en-US", {
+          {`subtotal: ${(line.amount ?? 0).toLocaleString("en-US", {
             style: "currency",
             currency: "USD",
           })}`}

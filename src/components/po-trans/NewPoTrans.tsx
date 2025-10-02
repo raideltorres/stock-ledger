@@ -69,13 +69,22 @@ export default function NewPoTrans({
         form.reset();
         onPoTransCreated?.(poTrans);
       } catch (error) {
-        const errorData = error as ErrorResponse;
-        toast.error(errorData.data.error, {
-          description: errorData.data.message,
-          dismissible: true,
-          duration: 5000,
-          position: "top-right",
-        });
+        if (typeof error === "object" && error !== null && "data" in error) {
+          const errorData = error as ErrorResponse;
+          toast.error(errorData.data.error, {
+            description: errorData.data.message,
+            dismissible: true,
+            duration: 5000,
+            position: "top-right",
+          });
+        } else {
+          toast.error("Error inesperado", {
+            description: "Ocurrió un error al crear la orden de compra.",
+            dismissible: true,
+            duration: 5000,
+            position: "top-right",
+          });
+        }
       }
     },
     [createPoTrans, form, onPoTransCreated, toast]

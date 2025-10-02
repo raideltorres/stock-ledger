@@ -71,13 +71,22 @@ export function EditPurchaseOrder() {
           },
         }).unwrap();
       } catch (error) {
-        const errorData = error as ErrorResponse;
-        toast.error(errorData.data.error, {
-          description: errorData.data.message,
-          dismissible: true,
-          duration: 5000,
-          position: "top-right",
-        });
+        if (typeof error === "object" && error !== null && "data" in error) {
+          const errorData = error as ErrorResponse;
+          toast.error(errorData.data.error, {
+            description: errorData.data.message,
+            dismissible: true,
+            duration: 5000,
+            position: "top-right",
+          });
+        } else {
+          toast.error("Error inesperado", {
+            description: "Ocurrió un error al actualizar la orden de compra.",
+            dismissible: true,
+            duration: 5000,
+            position: "top-right",
+          });
+        }
       }
     },
     [poTransDetailState.order?._id, toast, updatePoTrans]
@@ -176,13 +185,22 @@ export function EditPurchaseOrder() {
     try {
       await receivePoTrans(poTransDetailState.order._id).unwrap();
     } catch (error) {
-      const errorData = error as ErrorResponse;
-      toast.error(errorData.data.error, {
-        description: errorData.data.message,
-        dismissible: true,
-        duration: 5000,
-        position: "top-right",
-      });
+      if (typeof error === "object" && error !== null && "data" in error) {
+        const errorData = error as ErrorResponse;
+        toast.error(errorData.data.error, {
+          description: errorData.data.message,
+          dismissible: true,
+          duration: 5000,
+          position: "top-right",
+        });
+      } else {
+        toast.error("Error inesperado", {
+          description: "Ocurrió un error al recibir la orden de compra.",
+          dismissible: true,
+          duration: 5000,
+          position: "top-right",
+        });
+      }
     }
   }, [poTransDetailState.order?._id, receivePoTrans, toast]);
 
@@ -191,13 +209,22 @@ export function EditPurchaseOrder() {
     try {
       await invoicePoTrans(poTransDetailState.order._id).unwrap();
     } catch (error) {
-      const errorData = error as ErrorResponse;
-      toast.error(errorData.data.error, {
-        description: errorData.data.message,
-        dismissible: true,
-        duration: 5000,
-        position: "top-right",
-      });
+      if (typeof error === "object" && error !== null && "data" in error) {
+        const errorData = error as ErrorResponse;
+        toast.error(errorData.data.error, {
+          description: errorData.data.message,
+          dismissible: true,
+          duration: 5000,
+          position: "top-right",
+        });
+      } else {
+        toast.error("Error inesperado", {
+          description: "Ocurrió un error al pagar la orden de compra.",
+          dismissible: true,
+          duration: 5000,
+          position: "top-right",
+        });
+      }
     }
   }, [poTransDetailState.order?._id, invoicePoTrans, toast]);
 

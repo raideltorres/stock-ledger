@@ -51,13 +51,22 @@ export function SignIn() {
 
         login(signInResult);
       } catch (error) {
-        const errorData = error as ErrorResponse;
-        toast.error(errorData.data.error, {
-          description: errorData.data.message,
-          dismissible: true,
-          duration: 5000,
-          position: "top-right",
-        });
+        if (typeof error === "object" && error !== null && "data" in error) {
+          const errorData = error as ErrorResponse;
+          toast.error(errorData.data.error, {
+            description: errorData.data.message,
+            dismissible: true,
+            duration: 5000,
+            position: "top-right",
+          });
+        } else {
+          toast.error("Error inesperado", {
+            description: "Ocurrió un error al iniciar sesión.",
+            dismissible: true,
+            duration: 5000,
+            position: "top-right",
+          });
+        }
       }
     },
     [login, signIn, toast]

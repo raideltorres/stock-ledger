@@ -46,13 +46,22 @@ export default function NewUser() {
         await createUser(data).unwrap();
         form.reset();
       } catch (error) {
-        const errorData = error as ErrorResponse;
-        toast.error(errorData.data.error, {
-          description: errorData.data.message,
-          dismissible: true,
-          duration: 5000,
-          position: "top-right",
-        });
+        if (typeof error === "object" && error !== null && "data" in error) {
+          const errorData = error as ErrorResponse;
+          toast.error(errorData.data.error, {
+            description: errorData.data.message,
+            dismissible: true,
+            duration: 5000,
+            position: "top-right",
+          });
+        } else {
+          toast.error("Error inesperado", {
+            description: "Ocurrió un error al crear el usuario.",
+            dismissible: true,
+            duration: 5000,
+            position: "top-right",
+          });
+        }
       }
     },
     [createUser, form, toast]

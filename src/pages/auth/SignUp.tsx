@@ -23,10 +23,7 @@ import type { AuthResponse, ErrorResponse } from "@/utils/types";
 const registerSchema = z.object({
   name: z.string().min(1, "Campo requerido").min(2, "Nombre muy corto"),
   email: z.string().min(1, "Campo requerido").email("Correo no válido"),
-  password: z
-    .string()
-    .min(1, "Campo requerido")
-    .min(6, "Mínimo 6 caracteres"),
+  password: z.string().min(1, "Campo requerido").min(6, "Mínimo 6 caracteres"),
 });
 
 type RegisterValues = z.infer<typeof registerSchema>;
@@ -52,13 +49,22 @@ export function SignUp() {
 
         login(signUpResult);
       } catch (error) {
-        const errorData = error as ErrorResponse;
-        toast.error(errorData.data.error, {
-          description: errorData.data.message,
-          dismissible: true,
-          duration: 5000,
-          position: "top-right",
-        });
+        if (typeof error === "object" && error !== null && "data" in error) {
+          const errorData = error as ErrorResponse;
+          toast.error(errorData.data.error, {
+            description: errorData.data.message,
+            dismissible: true,
+            duration: 5000,
+            position: "top-right",
+          });
+        } else {
+          toast.error("Error inesperado", {
+            description: "Ocurrió un error al registrar el usuario.",
+            dismissible: true,
+            duration: 5000,
+            position: "top-right",
+          });
+        }
       }
     },
     [login, signUp, toast]
@@ -114,10 +120,7 @@ export function SignUp() {
                 </FormItem>
               )}
             />
-            <Button
-              type="submit"
-              className="w-full"
-            >
+            <Button type="submit" className="w-full">
               Registrarse
             </Button>
 

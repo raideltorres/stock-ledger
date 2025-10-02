@@ -1,7 +1,9 @@
 import { Toaster as Sonner, type ToasterProps } from "sonner";
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const theme = "light";
+  const theme = document.documentElement.classList.contains("dark")
+    ? "dark"
+    : "light";
 
   return (
     <Sonner

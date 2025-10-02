@@ -90,23 +90,21 @@ export default function NewPoTransLine({
           duration: 5000,
           position: "top-right",
         });
-
         return;
-      } else if (data.length > 0) {
-        const rawBarcode = data[0].rawValue;
+      }
 
-        if (isNumeric(rawBarcode)) {
-          form.setValue("barcode", rawBarcode);
-          handleBarcodeChange(rawBarcode);
-        } else {
-          toast.error("Error de escaneo", {
-            description:
-              "Código de barras no válido, el código debe ser numérico",
-            dismissible: true,
-            duration: 5000,
-            position: "top-right",
-          });
-        }
+      const rawBarcode = data[0].rawValue;
+      if (isNumeric(rawBarcode)) {
+        form.setValue("barcode", rawBarcode);
+        handleBarcodeChange(rawBarcode);
+      } else {
+        toast.error("Error de escaneo", {
+          description:
+            "Código de barras no válido, el código debe ser numérico",
+          dismissible: true,
+          duration: 5000,
+          position: "top-right",
+        });
       }
     },
     [form, handleBarcodeChange, toast]
@@ -122,13 +120,17 @@ export default function NewPoTransLine({
 
   const handleNewPoTransLine = useCallback(
     async (data: NewPoTransLineValues) => {
-      onNewPoTransLine?.({
-        product: data.product,
-        barcode: data.barcode,
-        name: data.name,
-        unitPrice: parseFloat(data.unitPrice),
-        qty: parseFloat(data.qty),
-      });
+      const unitPrice = parseFloat(data.unitPrice);
+
+      if (!isNaN(unitPrice)) {
+        onNewPoTransLine?.({
+          product: data.product,
+          barcode: data.barcode,
+          name: data.name,
+          unitPrice,
+          qty: parseFloat(data.qty),
+        });
+      }
 
       setSearchBarcode(undefined);
     },

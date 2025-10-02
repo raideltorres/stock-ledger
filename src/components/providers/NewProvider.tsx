@@ -43,13 +43,22 @@ export default function NewProvider() {
         await createProvider(data).unwrap();
         form.reset();
       } catch (error) {
-        const errorData = error as ErrorResponse;
-        toast.error(errorData.data.error, {
-          description: errorData.data.message,
-          dismissible: true,
-          duration: 5000,
-          position: "top-right",
-        });
+        if (typeof error === "object" && error !== null && "data" in error) {
+          const errorData = error as ErrorResponse;
+          toast.error(errorData.data.error, {
+            description: errorData.data.message,
+            dismissible: true,
+            duration: 5000,
+            position: "top-right",
+          });
+        } else {
+          toast.error("Error inesperado", {
+            description: "Ocurrió un error al crear el proveedor.",
+            dismissible: true,
+            duration: 5000,
+            position: "top-right",
+          });
+        }
       }
     },
     [createProvider, form, toast]
@@ -58,7 +67,7 @@ export default function NewProvider() {
   return (
     <div className="grid gap-4">
       <div className="space-y-2">
-        <h4 className="leading-none font-medium">Crear usuario</h4>
+        <h4 className="leading-none font-medium">Crear proveedor</h4>
       </div>
       <div className="grid gap-2">
         <Form {...form}>

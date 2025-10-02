@@ -57,13 +57,22 @@ export default function NewLocation({ entities = [] }: NewLocationProps) {
         await createLocation(data).unwrap();
         form.reset();
       } catch (error) {
-        const errorData = error as ErrorResponse;
-        toast.error(errorData.data.error, {
-          description: errorData.data.message,
-          dismissible: true,
-          duration: 5000,
-          position: "top-right",
-        });
+        if (typeof error === "object" && error !== null && "data" in error) {
+          const errorData = error as ErrorResponse;
+          toast.error(errorData.data.error, {
+            description: errorData.data.message,
+            dismissible: true,
+            duration: 5000,
+            position: "top-right",
+          });
+        } else {
+          toast.error("Error inesperado", {
+            description: "Ocurrió un error al crear la localidad.",
+            dismissible: true,
+            duration: 5000,
+            position: "top-right",
+          });
+        }
       }
     },
     [createLocation, form, toast]
@@ -72,7 +81,7 @@ export default function NewLocation({ entities = [] }: NewLocationProps) {
   return (
     <div className="grid gap-4">
       <div className="space-y-2">
-        <h4 className="leading-none font-medium">Crear usuario</h4>
+        <h4 className="leading-none font-medium">Crear localidad</h4>
       </div>
       <div className="grid gap-2">
         <Form {...form}>

@@ -15,10 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 const changePasswordSchema = z.object({
-  password: z
-    .string()
-    .min(1, "Campo requerido")
-    .min(6, "Mínimo 6 caracteres"),
+  password: z.string().min(1, "Campo requerido").min(6, "Mínimo 6 caracteres"),
 });
 
 type ChangePasswordValues = z.infer<typeof changePasswordSchema>;
@@ -39,7 +36,7 @@ export default function UserChangePassword({
 
   const handleChangePassword = useCallback(
     async (partial: ChangePasswordValues) => {
-      onChange?.(partial);
+      onChange?.({ password: partial.password } as User);
       form.reset();
     },
     [form, onChange]

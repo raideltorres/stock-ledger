@@ -42,10 +42,15 @@ export default function EditPoTransLine({
 
   const handleEditPoTransLine = useCallback(
     async (data: EditPoTransLineValues) => {
-      onChange?.({
-        unitPrice: parseFloat(data.unitPrice),
-        qty: parseFloat(data.qty),
-      });
+      const unitPrice = parseFloat(data.unitPrice);
+      const qty = parseFloat(data.qty);
+
+      if (!isNaN(unitPrice) && !isNaN(qty)) {
+        onChange?.({
+          unitPrice,
+          qty,
+        });
+      }
     },
     [onChange]
   );
