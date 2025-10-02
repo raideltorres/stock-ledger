@@ -40,7 +40,7 @@ export default function PoTransHeader({
                 <Avatar className="h-12 w-12 rounded-lg">
                   <AvatarImage src={provider?.avatar} alt={provider?.name} />
                   <AvatarFallback className="rounded-lg">
-                    {getInitials(provider?.name ?? "Location")}
+                    {getInitials(provider?.name ?? "Provider")}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">

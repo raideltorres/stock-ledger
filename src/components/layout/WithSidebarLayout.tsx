@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom";
-import { SidebarProvider, SidebarTrigger } from "../ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
 import { Footer } from "./Footer";
 import { Navigation } from "./Navigation";
-import { Toaster } from "../ui/sonner";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function WithSidebarLayout() {
   return (

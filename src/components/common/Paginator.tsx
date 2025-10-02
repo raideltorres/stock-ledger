@@ -31,42 +31,34 @@ export function Paginator({
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const getPages = () => {
-    const pages = [];
-
-    // Siempre mostrar la primera página
-    pages.push(1);
-
-    // Mostrar puntos suspensivos si hay más de 2 páginas antes de la actual
-    if (currentPage > 3) {
-      pages.push("...");
+    if (totalPages <= 5) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
 
-    // Página anterior
-    if (currentPage > 2) {
-      pages.push(currentPage - 1);
+    if (currentPage <= 3) {
+      return [1, 2, 3, 4, "...", totalPages];
     }
 
-    // Página actual
-    if (currentPage !== 1 && currentPage !== totalPages) {
-      pages.push(currentPage);
+    if (currentPage >= totalPages - 2) {
+      return [
+        1,
+        "...",
+        totalPages - 3,
+        totalPages - 2,
+        totalPages - 1,
+        totalPages,
+      ];
     }
 
-    // Página siguiente
-    if (currentPage < totalPages - 1) {
-      pages.push(currentPage + 1);
-    }
-
-    // Mostrar puntos suspensivos si hay más de 2 páginas después de la actual
-    if (currentPage < totalPages - 2) {
-      pages.push("...");
-    }
-
-    // Siempre mostrar la última página
-    if (totalPages > 1) {
-      pages.push(totalPages);
-    }
-
-    return pages;
+    return [
+      1,
+      "...",
+      currentPage - 1,
+      currentPage,
+      currentPage + 1,
+      "...",
+      totalPages,
+    ];
   };
 
   const pages = getPages();

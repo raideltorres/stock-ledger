@@ -115,6 +115,7 @@ export function EditPurchaseOrder() {
 
   const handleNewPoTransLine = useCallback(
     async (data: NewPoTransLineData) => {
+      const currentLines = poTransDetailState.editedLines!;
       let productId = data.product;
 
       if (!productId) {
@@ -134,14 +135,14 @@ export function EditPurchaseOrder() {
       };
 
       // check if we have a line with the same product and unit price on the current order
-      const existingLineIndex = poTransDetailState.editedLines!.findIndex(
+      const existingLineIndex = currentLines.findIndex(
         (line) =>
           line.product?._id === newLine.product &&
           line.unitPrice === newLine.unitPrice
       );
 
       if (existingLineIndex !== -1) {
-        const existingLine = poTransDetailState.editedLines![existingLineIndex];
+        const existingLine = currentLines[existingLineIndex];
 
         // If it exists, update the quantity and amount
         const updatedQty = existingLine.qty! + newLine.qty!;
@@ -151,7 +152,7 @@ export function EditPurchaseOrder() {
           qty: updatedQty,
           amount: updatedAmount,
         };
-        const updatedLines = [...poTransDetailState.editedLines!];
+        const updatedLines = [...currentLines];
         updatedLines[existingLineIndex] = updatedLine;
         updatePurchaseOrder(updatedLines);
       } else {
@@ -164,7 +165,7 @@ export function EditPurchaseOrder() {
             name: data.name,
           },
         };
-        updatePurchaseOrder([...poTransDetailState.editedLines!, newLineItem]);
+        updatePurchaseOrder([...currentLines, newLineItem]);
       }
     },
     [createProduct, poTransDetailState.editedLines, updatePurchaseOrder]

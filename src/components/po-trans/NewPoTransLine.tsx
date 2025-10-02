@@ -260,7 +260,7 @@ export default function NewPoTransLine({
                       onChange={(e) => {
                         const value = e.target.value;
                         if (isNumeric(value)) {
-                          form.setValue("unitPrice", value);
+                          field.onChange(value);
                         }
                       }}
                     />
@@ -283,7 +283,7 @@ export default function NewPoTransLine({
                       onChange={(e) => {
                         const value = e.target.value;
                         if (isNumeric(value)) {
-                          form.setValue("qty", value);
+                          field.onChange(value);
                         }
                       }}
                     />

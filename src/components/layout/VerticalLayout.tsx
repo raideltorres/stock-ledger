@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { Navigation } from "./Navigation";
 import { Footer } from "./Footer";
-import { Toaster } from "../ui/sonner";
+import { Toaster } from "@/components/ui/sonner";
 
 export function VerticalLayout() {
   return (
