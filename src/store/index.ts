@@ -18,6 +18,7 @@ import { locationApi } from "./api/location";
 import { poTransApi } from "./api/po-trans";
 import { productsApi } from "./api/products";
 import { providersApi } from "./api/providers";
+import { soTransApi } from "./api/so-trans";
 import { userApi } from "./api/user";
 import {
   customersFilterReducer,
@@ -27,6 +28,8 @@ import {
   poTransFilterReducer,
   productsFilterReducer,
   providersFilterReducer,
+  soTransDetailStateReducer,
+  soTransFilterReducer,
   userReducer,
   usersFilterReducer,
 } from "./slices";
@@ -47,6 +50,7 @@ const middlewares = [
   poTransApi.middleware,
   productsApi.middleware,
   providersApi.middleware,
+  soTransApi.middleware,
   userApi.middleware,
 ];
 
@@ -59,6 +63,7 @@ const store = configureStore({
     [poTransApi.reducerPath]: poTransApi.reducer,
     [productsApi.reducerPath]: productsApi.reducer,
     [providersApi.reducerPath]: providersApi.reducer,
+    [soTransApi.reducerPath]: soTransApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
 
     customersFilter: customersFilterReducer,
@@ -68,6 +73,8 @@ const store = configureStore({
     poTransFilter: poTransFilterReducer,
     productsFilter: productsFilterReducer,
     providersFilter: providersFilterReducer,
+    soTransDetailState: soTransDetailStateReducer,
+    soTransFilter: soTransFilterReducer,
     usersFilter: usersFilterReducer,
 
     user: persistedUserReducer,

@@ -6,9 +6,11 @@ import type {
   PoTransStatus,
   ProviderStatus,
   Role,
+  SoTransStatus,
   UserStatus,
 } from "./common";
 import type { PoTrans, PoTransLine } from "./po-trans";
+import type { SoTrans, SoTransLine } from "./so-trans";
 
 export interface BaseFiltersState {
   page?: number;
@@ -57,4 +59,16 @@ export interface PoTransFilterState extends BaseFiltersState {
 export interface PoTransDetailState {
   order?: PoTrans;
   editedLines?: PoTransLine[];
+}
+
+export interface SoTransFilterState extends BaseFiltersState {
+  location?: string;
+  user?: string;
+  customer?: string;
+  status?: SoTransStatus;
+}
+
+export interface SoTransDetailState {
+  order?: SoTrans;
+  editedLines?: SoTransLine[];
 }

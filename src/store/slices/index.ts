@@ -5,6 +5,8 @@ export { default as poTransDetailStateReducer } from "./po-trans-detail-state";
 export { default as poTransFilterReducer } from "./po-trans-filter";
 export { default as productsFilterReducer } from "./products-filter";
 export { default as providersFilterReducer } from "./providers-filter";
+export { default as soTransDetailStateReducer } from "./so-trans-detail-state";
+export { default as soTransFilterReducer } from "./so-trans-filter";
 export { default as userReducer } from "./user";
 export { default as usersFilterReducer } from "./users-filter";
 
@@ -15,5 +17,7 @@ export * from "./po-trans-detail-state";
 export * from "./po-trans-filter";
 export * from "./products-filter";
 export * from "./providers-filter";
+export * from "./so-trans-detail-state";
+export * from "./so-trans-filter";
 export * from "./user";
 export * from "./users-filter";
