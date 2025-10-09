@@ -26,9 +26,9 @@ export interface SoTransFilterProps {
 }
 
 export default function SoTransFilter({
-  locations = [],
-  users = [],
-  customers = [],
+  locations,
+  users,
+  customers,
   onFilterChange,
 }: SoTransFilterProps) {
   const soTransFilterState = useSelector(selectSoTransFilterSlice);
@@ -42,77 +42,83 @@ export default function SoTransFilter({
 
   return (
     <div className="w-full flex flex-row flex-wrap gap-4 bg-gray-100 p-2 rounded-md">
-      <div className="flex flex-col gap-1">
-        <Label>Localidad</Label>
-        <Select
-          onValueChange={(location: string) => handleChange({ location })}
-          defaultValue={soTransFilterState.location}
-        >
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Seleccione una localidad" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="ALL">Todas</SelectItem>
-              {locations?.map((location, index) => (
-                <SelectItem
-                  key={`location-item-${index}`}
-                  value={location._id!}
-                >
-                  {location.name}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div>
+      {locations && (
+        <div className="flex flex-col gap-1">
+          <Label>Localidad</Label>
+          <Select
+            onValueChange={(location: string) => handleChange({ location })}
+            defaultValue={soTransFilterState.location}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Seleccione una localidad" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="ALL">Todas</SelectItem>
+                {locations?.map((location, index) => (
+                  <SelectItem
+                    key={`location-item-${index}`}
+                    value={location._id!}
+                  >
+                    {location.name}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+      )}
 
-      <div className="flex flex-col gap-1">
-        <Label>Operador</Label>
-        <Select
-          onValueChange={(user: string) => handleChange({ user })}
-          defaultValue={soTransFilterState.user}
-        >
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Seleccione un operador" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="ALL">Todos</SelectItem>
-              {users?.map((user, index) => (
-                <SelectItem key={`user-item-${index}`} value={user._id!}>
-                  {user.name}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div>
+      {users && (
+        <div className="flex flex-col gap-1">
+          <Label>Operador</Label>
+          <Select
+            onValueChange={(user: string) => handleChange({ user })}
+            defaultValue={soTransFilterState.user}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Seleccione un operador" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="ALL">Todos</SelectItem>
+                {users?.map((user, index) => (
+                  <SelectItem key={`user-item-${index}`} value={user._id!}>
+                    {user.name}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+      )}
 
-      <div className="flex flex-col gap-1">
-        <Label>Cliente</Label>
-        <Select
-          onValueChange={(customer: string) => handleChange({ customer })}
-          defaultValue={soTransFilterState.customer}
-        >
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Seleccione un cliente" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="ALL">Todos</SelectItem>
-              {customers?.map((customer, index) => (
-                <SelectItem
-                  key={`customer-item-${index}`}
-                  value={customer._id!}
-                >
-                  {customer.name}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div>
+      {customers && (
+        <div className="flex flex-col gap-1">
+          <Label>Cliente</Label>
+          <Select
+            onValueChange={(customer: string) => handleChange({ customer })}
+            defaultValue={soTransFilterState.customer}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Seleccione un cliente" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="ALL">Todos</SelectItem>
+                {customers?.map((customer, index) => (
+                  <SelectItem
+                    key={`customer-item-${index}`}
+                    value={customer._id!}
+                  >
+                    {customer.name}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+      )}
 
       <div className="flex flex-col gap-1">
         <Label>Estado</Label>

@@ -31,9 +31,10 @@ import type {
 import { Banknote, PackagePlus, PlusSquare } from "lucide-react";
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-export function EditPurchaseOrder() {
+export function EditPoTransPage() {
+  const navigate = useNavigate();
   const { transId } = useParams();
   const dispatch = useDispatch();
   const toast = useToast();
@@ -181,6 +182,7 @@ export function EditPurchaseOrder() {
     if (!poTransDetailState.order?._id) return;
     try {
       await receivePoTrans(poTransDetailState.order._id).unwrap();
+      navigate(-1);
     } catch (error) {
       if (typeof error === "object" && error !== null && "data" in error) {
         const errorData = error as ErrorResponse;
@@ -199,12 +201,13 @@ export function EditPurchaseOrder() {
         });
       }
     }
-  }, [poTransDetailState.order?._id, receivePoTrans, toast]);
+  }, [navigate, poTransDetailState.order?._id, receivePoTrans, toast]);
 
   const handleInvoicePoTrans = useCallback(async () => {
     if (!poTransDetailState.order?._id) return;
     try {
       await invoicePoTrans(poTransDetailState.order._id).unwrap();
+      navigate(-1);
     } catch (error) {
       if (typeof error === "object" && error !== null && "data" in error) {
         const errorData = error as ErrorResponse;
@@ -223,7 +226,7 @@ export function EditPurchaseOrder() {
         });
       }
     }
-  }, [poTransDetailState.order?._id, invoicePoTrans, toast]);
+  }, [poTransDetailState.order?._id, invoicePoTrans, navigate, toast]);
 
   useEffect(() => {
     if (!isFetchingPoTrans && poTransDetailData) {

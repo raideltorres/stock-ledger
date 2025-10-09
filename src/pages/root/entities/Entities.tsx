@@ -16,7 +16,7 @@ import {
   setEntitiesFilterSlice,
 } from "@/store/slices";
 import type { ActionData, EntitiesFilterState, Entity } from "@/utils/types";
-import { Store } from "lucide-react";
+import { PlusSquare } from "lucide-react";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -62,7 +62,7 @@ export function Entities() {
       <div className="w-full flex flex-row items-center justify-end">
         <Popover>
           <PopoverTrigger asChild>
-            <Store
+            <PlusSquare
               size={36}
               className="bg-gray-300 p-1 border rounded-full shadow cursor-pointer"
             />

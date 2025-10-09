@@ -11,16 +11,17 @@ import { SignIn } from "@/pages/auth/SignIn";
 import { SignUp } from "@/pages/auth/SignUp";
 
 import { Sales } from "@/pages/root/sales/Sales";
+import { Purchases } from "@/pages/root/purchases/Purchases";
 
 import { Dashboard } from "@/pages/root/dashboard/Dashboard";
 import { Customers } from "@/pages/root/customers/Customers";
 import { Entities } from "@/pages/root/entities/Entities";
 import { Inventory } from "@/pages/root/inventory/Inventory";
 import { Locations } from "@/pages/root/locations/Locations";
-import { PurchaseOrders } from "@/pages/root/po/PurchaseOrders";
-import { EditPurchaseOrder } from "@/pages/root/po/EditPurchaseOrder";
-import { SaleOrders } from "@/pages/root/so/SaleOrders";
-import { EditSellOrder } from "@/pages/root/so/EditSellOrder";
+import { PoTransPage } from "@/pages/root/po-trans/PoTransPage";
+import { EditPoTransPage } from "@/pages/root/po-trans/EditPoTransPage";
+import { SoTransPage } from "@/pages/root/so-trans/SoTransPage";
+import { EditSoTransPage } from "@/pages/root/so-trans/EditSoTransPage";
 import { Providers } from "@/pages/root/providers/Providers";
 import { Users } from "@/pages/root/users/Users";
 
@@ -44,6 +45,9 @@ export default function MainRoutes() {
         {/* Authentication guard section */}
         <Route element={<AuthenticatedRoute />}>
           <Route path="sales" element={<Sales />} />
+          <Route path="sale/:transId/edit" element={<EditSoTransPage />} />
+          <Route path="purchases" element={<Purchases />} />
+          <Route path="purchase/:transId/edit" element={<EditPoTransPage />} />
           <Route path="forbidden" element={<Forbidden />} />
         </Route>
       </Route>
@@ -57,10 +61,10 @@ export default function MainRoutes() {
           <Route path="entities" element={<Entities />} />
           <Route path="inventory" element={<Inventory />} />
           <Route path="locations" element={<Locations />} />
-          <Route path="po" element={<PurchaseOrders />} />
-          <Route path="po/:transId/edit" element={<EditPurchaseOrder />} />
-          <Route path="so" element={<SaleOrders />} />
-          <Route path="so/:transId/edit" element={<EditSellOrder />} />
+          <Route path="po" element={<PoTransPage />} />
+          <Route path="po/:transId/edit" element={<EditPoTransPage />} />
+          <Route path="so" element={<SoTransPage />} />
+          <Route path="so/:transId/edit" element={<EditSoTransPage />} />
           <Route path="providers" element={<Providers />} />
           <Route path="users" element={<Users />} />
         </Route>

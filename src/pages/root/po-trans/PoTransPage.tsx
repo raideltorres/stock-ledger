@@ -1,90 +1,90 @@
 import { ListItemSkeleton } from "@/components/common/ListItemSkeleton";
 import { PageHeader } from "@/components/common/PageHeader";
 import { Paginator } from "@/components/common/Paginator";
-import NewSoTrans from "@/components/so-trans/NewSoTrans";
-import SoTransFilter from "@/components/so-trans/SoTransFilter";
-import { SoTransListItem } from "@/components/so-trans/SoTransListItem";
+import NewPoTrans from "@/components/po-trans/NewPoTrans";
+import PoTransFilter from "@/components/po-trans/PoTransFilter";
+import { PoTransListItem } from "@/components/po-trans/PoTransListItem";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ROWS_PER_PAGE } from "@/constants";
-import { useGetCustomerQuery } from "@/store/api/customers";
 import { useGetLocationQuery } from "@/store/api/location";
-import { useGetSoTransQuery } from "@/store/api/so-trans";
+import { useGetPoTransQuery } from "@/store/api/po-trans";
+import { useGetProviderQuery } from "@/store/api/providers";
 import { useGetUsersQuery } from "@/store/api/user";
 import {
-  selectSoTransFilterSlice,
-  setSoTransFilterSlice,
+  selectPoTransFilterSlice,
+  setPoTransFilterSlice,
 } from "@/store/slices";
-import type { SoTrans, SoTransFilterState } from "@/utils/types";
+import type { PoTrans, PoTransFilterState } from "@/utils/types";
 import { PlusSquare } from "lucide-react";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-export function SaleOrders() {
+export function PoTransPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const soTransFilterState = useSelector(selectSoTransFilterSlice);
+  const poTransFilterState = useSelector(selectPoTransFilterSlice);
 
   const { data: locationsData } = useGetLocationQuery(
-    { status: "ACTIVE", type: "SALES_FLOOR" },
+    { status: "ACTIVE" },
     {
-      skip: !soTransFilterState,
+      skip: !poTransFilterState,
     }
   );
   const { data: usersData } = useGetUsersQuery(
     { status: "ACTIVE" },
     {
-      skip: !soTransFilterState,
+      skip: !poTransFilterState,
     }
   );
-  const { data: customersData } = useGetCustomerQuery(
+  const { data: providersData } = useGetProviderQuery(
     { status: "ACTIVE" },
     {
-      skip: !soTransFilterState,
+      skip: !poTransFilterState,
     }
   );
-  const { data: soTransData, isFetching: isFetchingSoTrans } =
-    useGetSoTransQuery(soTransFilterState, {
-      skip: !soTransFilterState,
+  const { data: poTransData, isFetching: isFetchingPoTrans } =
+    useGetPoTransQuery(poTransFilterState, {
+      skip: !poTransFilterState,
     });
 
   const handleOnFilterChange = useCallback(
-    (partial: SoTransFilterState) => {
-      dispatch(setSoTransFilterSlice(partial));
+    (partial: PoTransFilterState) => {
+      dispatch(setPoTransFilterSlice(partial));
     },
     [dispatch]
   );
 
   const handleOnNewItemCreated = useCallback(
-    async (data: SoTrans) => {
-      navigate(`/admin/so/${data._id}/edit`);
+    async (data: PoTrans) => {
+      navigate(`/admin/po/${data._id}/edit`);
     },
     [navigate]
   );
 
   const handleOnItemTap = useCallback(
-    async (data: SoTrans) => {
-      navigate(`/admin/so/${data._id}/edit`);
+    async (data: PoTrans) => {
+      navigate(`/admin/po/${data._id}/edit`);
     },
     [navigate]
   );
 
   return (
     <div className="w-full flex flex-col items-start justify-start gap-3 p-3">
-      <PageHeader text="Ordenes de venta" />
+      <PageHeader text="Ordenes de compra" />
 
-      <SoTransFilter
+      <PoTransFilter
         locations={locationsData?.data ?? []}
         users={usersData?.data ?? []}
-        customers={customersData?.data ?? []}
+        providers={providersData?.data ?? []}
         onFilterChange={handleOnFilterChange}
       />
 
-      {/* new soTran */}
+      {/* new poTran */}
       <div className="w-full flex flex-row items-center justify-end">
         <Popover>
           <PopoverTrigger asChild>
@@ -94,37 +94,37 @@ export function SaleOrders() {
             />
           </PopoverTrigger>
           <PopoverContent>
-            <NewSoTrans
+            <NewPoTrans
               locations={locationsData?.data ?? []}
               users={usersData?.data ?? []}
-              customers={customersData?.data ?? []}
-              onSoTransCreated={handleOnNewItemCreated}
+              providers={providersData?.data ?? []}
+              onPoTransCreated={handleOnNewItemCreated}
             />
           </PopoverContent>
         </Popover>
       </div>
 
       <div className="w-full flex flex-1 flex-col gap-2">
-        {isFetchingSoTrans && <ListItemSkeleton />}
-        {!isFetchingSoTrans &&
-          soTransData &&
-          soTransData.data.length > 0 &&
-          soTransData.data.map((item) => (
-            <SoTransListItem
+        {isFetchingPoTrans && <ListItemSkeleton />}
+        {!isFetchingPoTrans &&
+          poTransData &&
+          poTransData.data.length > 0 &&
+          poTransData.data.map((item) => (
+            <PoTransListItem
               key={`po-tran-item-${item._id}`}
-              soTrans={item}
+              poTrans={item}
               onTap={handleOnItemTap}
             />
           ))}
-        {!isFetchingSoTrans && soTransData && soTransData.data.length === 0 && (
+        {!isFetchingPoTrans && poTransData && poTransData.data.length === 0 && (
           <div> No data </div>
         )}
       </div>
 
       <Paginator
-        totalItems={soTransData?.totalItems ?? 0}
-        currentPage={soTransFilterState.page ?? 1}
-        itemsPerPage={soTransFilterState.limit ?? ROWS_PER_PAGE}
+        totalItems={poTransData?.totalItems ?? 0}
+        currentPage={poTransFilterState.page ?? 1}
+        itemsPerPage={poTransFilterState.limit ?? ROWS_PER_PAGE}
         onPageChange={handleOnFilterChange}
         onItemsPerPageChange={handleOnFilterChange}
       />

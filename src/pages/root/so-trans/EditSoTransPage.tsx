@@ -28,9 +28,10 @@ import type {
 import { Banknote, PlusSquare } from "lucide-react";
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-export function EditSellOrder() {
+export function EditSoTransPage() {
+  const navigate = useNavigate();
   const { transId } = useParams();
   const dispatch = useDispatch();
   const toast = useToast();
@@ -172,6 +173,7 @@ export function EditSellOrder() {
     if (!soTransDetailState.order?._id) return;
     try {
       await sellSoTrans(soTransDetailState.order._id).unwrap();
+      navigate(-1);
     } catch (error) {
       if (typeof error === "object" && error !== null && "data" in error) {
         const errorData = error as ErrorResponse;
@@ -190,7 +192,7 @@ export function EditSellOrder() {
         });
       }
     }
-  }, [soTransDetailState.order?._id, sellSoTrans, toast]);
+  }, [soTransDetailState.order?._id, sellSoTrans, navigate, toast]);
 
   useEffect(() => {
     if (!isFetchingSoTrans && soTransDetailData) {

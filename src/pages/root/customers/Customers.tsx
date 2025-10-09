@@ -23,7 +23,7 @@ import type {
   CustomerArgs,
   CustomersFilterState,
 } from "@/utils/types";
-import { CircleUser } from "lucide-react";
+import { PlusSquare } from "lucide-react";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -69,7 +69,7 @@ export function Customers() {
       <div className="w-full flex flex-row items-center justify-end">
         <Popover>
           <PopoverTrigger asChild>
-            <CircleUser
+            <PlusSquare
               size={36}
               className="bg-gray-300 p-1 border rounded-full shadow cursor-pointer"
             />

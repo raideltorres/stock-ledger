@@ -188,7 +188,7 @@ export default function NewPoTransLine({
   return (
     <div className="grid gap-4">
       <div className="space-y-2">
-        <h4 className="leading-none font-medium">Crear orden de compra</h4>
+        <h4 className="leading-none font-medium">Adicionar producto</h4>
       </div>
 
       <div className="grid gap-2">
